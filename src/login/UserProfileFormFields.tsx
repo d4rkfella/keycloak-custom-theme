@@ -27,6 +27,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 export default function UserProfileFormFields(props: UserProfileFormFieldsProps): JSX.Element {
     const { kcContext, i18n, kcClsx, onIsFormSubmittableValueChange, doMakeUserConfirmPassword, BeforeField, AfterField } = props;
@@ -62,7 +63,7 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps)
                                 i18n={i18n}
                             />
                         )}
-                        <div
+                        <Box
                             className={kcClsx("kcFormGroupClass")}
                             style={{
                                 display:
@@ -72,15 +73,15 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps)
                                         : undefined
                             }}
                         >
-                            <div className={kcClsx("kcInputWrapperClass")}>
+                            <Box className={kcClsx("kcInputWrapperClass")}>
                                 {attribute.annotations.inputHelperTextBefore !== undefined && (
-                                    <div
+                                    <Box
                                         className={kcClsx("kcInputHelperTextBeforeClass")}
                                         id={`form-help-text-before-${attribute.name}`}
                                         aria-live="polite"
                                     >
                                         {i18n.advancedMsg(attribute.annotations.inputHelperTextBefore)}
-                                    </div>
+                                    </Box>
                                 )}
                                 <InputFieldByType
                                     attribute={attribute}
@@ -91,13 +92,13 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps)
                                     i18n={i18n}
                                 />
                                 {attribute.annotations.inputHelperTextAfter !== undefined && (
-                                    <div
+                                    <Box
                                         className={kcClsx("kcInputHelperTextAfterClass")}
                                         id={`form-help-text-after-${attribute.name}`}
                                         aria-live="polite"
                                     >
                                         {i18n.advancedMsg(attribute.annotations.inputHelperTextAfter)}
-                                    </div>
+                                    </Box>
                                 )}
                                 {AfterField !== undefined && (
                                     <AfterField
@@ -109,8 +110,8 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps)
                                         i18n={i18n}
                                     />
                                 )}
-                            </div>
-                        </div>
+                            </Box>
+                        </Box>
                     </Fragment>
                 );
             })}
@@ -135,7 +136,7 @@ function GroupLabel(props: {
             assert(attribute.group !== undefined);
 
             return (
-                <div
+                <Box
                     className={kcClsx("kcFormGroupClass")}
                     {...Object.fromEntries(Object.entries(attribute.group.html5DataAnnotations).map(([key, value]) => [`data-${key}`, value]))}
                 >
@@ -144,11 +145,11 @@ function GroupLabel(props: {
                         const groupHeaderText = groupDisplayHeader !== "" ? i18n.advancedMsg(groupDisplayHeader) : attribute.group.name;
 
                         return (
-                            <div className={kcClsx("kcContentWrapperClass")}>
+                            <Box className={kcClsx("kcContentWrapperClass")}>
                                 <label id={`header-${attribute.group.name}`} className={kcClsx("kcFormGroupHeader")}>
                                     {groupHeaderText}
                                 </label>
-                            </div>
+                            </Box>
                         );
                     })()}
                     {(() => {
@@ -158,17 +159,17 @@ function GroupLabel(props: {
                             const groupDescriptionText = i18n.advancedMsg(groupDisplayDescription);
 
                             return (
-                                <div className={kcClsx("kcLabelWrapperClass")}>
+                                <Box className={kcClsx("kcLabelWrapperClass")}>
                                     <label id={`description-${attribute.group.name}`} className={kcClsx("kcLabelClass")}>
                                         {groupDescriptionText}
                                     </label>
-                                </div>
+                                </Box>
                             );
                         }
 
                         return null;
                     })()}
-                </div>
+                </Box>
             );
         }
     }

@@ -41,9 +41,9 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
             displayMessage={!messagesPerField.existsError("password", "password-confirm")}
             headerNode={msg("updatePasswordTitle")}
         >
-            <form id="kc-passwd-update-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <div className={kcClsx("kcFormGroupClass")}>
-                    <div className={kcClsx("kcInputWrapperClass")}>
+            <Box component="form" id="kc-passwd-update-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
+                <Box className={kcClsx("kcFormGroupClass")}>
+                    <Box className={kcClsx("kcInputWrapperClass")}>
                         <FormControl sx={{ width: "100%", minWidth: 350, mb: 2 }} variant="outlined">
                             <InputLabel htmlFor="password-new">{msg("passwordNew")}</InputLabel>
                             <OutlinedInput
@@ -80,11 +80,11 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                 </FormHelperText>
                             )}
                         </FormControl>
-                    </div>
-                </div>
+                    </Box>
+                </Box>
 
-                <div className={kcClsx("kcFormGroupClass")}>
-                    <div className={kcClsx("kcInputWrapperClass")}>
+                <Box className={kcClsx("kcFormGroupClass")}>
+                    <Box className={kcClsx("kcInputWrapperClass")}>
                         <FormControl sx={{ width: "100%", minWidth: 350, mb: 2 }} variant="outlined">
                             <InputLabel htmlFor="password-confirm">{msg("passwordConfirm")}</InputLabel>
                             <OutlinedInput
@@ -120,14 +120,14 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                 </FormHelperText>
                             )}
                         </FormControl>
-                    </div>
-                </div>
+                    </Box>
+                </Box>
 
-                <div className={kcClsx("kcFormGroupClass")}>
-                    <div className={kcClsx("kcInputWrapperClass")}>
+                <Box className={kcClsx("kcFormGroupClass")}>
+                    <Box className={kcClsx("kcInputWrapperClass")}>
                         <LogoutOtherSessions i18n={i18n} />
-                    </div>
-                    <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
+                    </Box>
+                    <Box id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
                         {isAppInitiatedAction ? (
                             <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
                                 <Button sx={{ flex: 1 }} variant="contained" type="submit">
@@ -142,9 +142,9 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                 {msg("doSubmit")}
                             </Button>
                         )}
-                    </div>
-                </div>
-            </form>
+                    </Box>
+                </Box>
+            </Box>
         </Template>
     );
 }

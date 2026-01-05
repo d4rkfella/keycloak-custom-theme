@@ -31,9 +31,9 @@ export default function LoginResetOtp(props: PageProps<Extract<KcContext, { page
             displayMessage={!messagesPerField.existsError("totp")}
             headerNode={msg("doLogIn")}
         >
-            <form id="kc-otp-reset-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <div className={kcClsx("kcInputWrapperClass")}>
-                    <div className={kcClsx("kcInfoAreaWrapperClass")}>
+            <Box component="form" id="kc-otp-reset-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
+                <Box className={kcClsx("kcInputWrapperClass")}>
+                    <Box className={kcClsx("kcInfoAreaWrapperClass")}>
                         <Typography id="kc-otp-reset-form-description" variant="body1" sx={{ mb: 2 }}>
                             {msg("otp-reset-description")}
                         </Typography>
@@ -92,17 +92,17 @@ export default function LoginResetOtp(props: PageProps<Extract<KcContext, { page
                             </Box>
                         ))}
 
-                        <div className={kcClsx("kcFormGroupClass")}>
-                            <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
+                        <Box className={kcClsx("kcFormGroupClass")}>
+                            <Box id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
                                 <Button id="kc-otp-reset-form-submit" sx={{ width: "100%", mt: 3 }} variant="contained" type="submit" size="large">
                                     {msg("doSubmit")}
                                 </Button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <div className="clearfix" />
+                            </Box>
+                        </Box>
+                    </Box>
+                </Box>
+            </Box>
+            <Box className="clearfix" />
         </Template>
     );
 }

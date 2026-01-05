@@ -37,8 +37,8 @@ export default function WebauthnRegister(props: PageProps<Extract<KcContext, { p
                 </Box>
             }
         >
-            <form id="register" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <div className={kcClsx("kcFormGroupClass")}>
+            <Box component="form" id="register" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
+                <Box className={kcClsx("kcFormGroupClass")}>
                     <input type="hidden" id="clientDataJSON" name="clientDataJSON" />
                     <input type="hidden" id="attestationObject" name="attestationObject" />
                     <input type="hidden" id="publicKeyCredentialId" name="publicKeyCredentialId" />
@@ -46,15 +46,15 @@ export default function WebauthnRegister(props: PageProps<Extract<KcContext, { p
                     <input type="hidden" id="transports" name="transports" />
                     <input type="hidden" id="error" name="error" />
                     <LogoutOtherSessions kcClsx={kcClsx} i18n={i18n} />
-                </div>
-            </form>
+                </Box>
+            </Box>
 
             <Button sx={{ width: "100%" }} variant="contained" type="submit" id={authButtonId}>
                 {msg("doRegisterSecurityKey")}
             </Button>
 
             {!isSetRetry && isAppInitiatedAction && (
-                <form action={url.loginAction} className={kcClsx("kcFormClass")} id="kc-webauthn-settings-form" method="post">
+                <Box component="form" action={url.loginAction} className={kcClsx("kcFormClass")} id="kc-webauthn-settings-form" method="post">
                     <Button
                         sx={{ width: "100%" }}
                         variant="contained"
@@ -66,7 +66,7 @@ export default function WebauthnRegister(props: PageProps<Extract<KcContext, { p
                     >
                         {msg("doCancel")}
                     </Button>
-                </form>
+                </Box>
             )}
         </Template>
     );
@@ -77,11 +77,11 @@ function LogoutOtherSessions(props: { kcClsx: KcClsx; i18n: I18n }) {
     const { msg } = i18n;
 
     return (
-        <div className="checkbox">
+        <Box className="checkbox">
             <FormControlLabel
                 control={<Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked />}
                 label={msg("logoutOtherSessions")}
             />
-        </div>
+        </Box>
     );
 }

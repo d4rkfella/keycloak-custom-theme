@@ -12,6 +12,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import Box from "@mui/material/Box";
 
 export default function LoginUsername(props: PageProps<Extract<KcContext, { pageId: "login-username.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -56,7 +57,7 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
             socialProvidersNode={
                 <>
                     {realm.password && social !== undefined && social.providers !== undefined && social.providers.length !== 0 && (
-                        <div id="kc-social-providers" className={kcClsx("kcFormSocialAccountSectionClass")}>
+                        <Box id="kc-social-providers" className={kcClsx("kcFormSocialAccountSectionClass")}>
                             <hr />
                             <h2>{msg("identity-provider-login-label")}</h2>
                             <ul className={kcClsx("kcFormSocialAccountListClass", social.providers.length > 3 && "kcFormSocialAccountListGridClass")}>
@@ -78,15 +79,16 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                                     </li>
                                 ))}
                             </ul>
-                        </div>
+                        </Box>
                     )}
                 </>
             }
         >
-            <div id="kc-form">
-                <div id="kc-form-wrapper">
+            <Box id="kc-form">
+                <Box id="kc-form-wrapper">
                     {realm.password && (
-                        <form
+                        <Box
+                            component="form"
                             id="kc-form-login"
                             action={url.loginAction}
                             method="post"
@@ -96,7 +98,7 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                             }}
                         >
                             {!usernameHidden && (
-                                <div className={kcClsx("kcFormGroupClass")}>
+                                <Box className={kcClsx("kcFormGroupClass")}>
                                     <TextField
                                         sx={{ width: "100%", minWidth: 350, pb: 1 }}
                                         label={
@@ -114,19 +116,19 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                                         error={messagesPerField.existsError("username")}
                                         helperText={messagesPerField.existsError("username") && messagesPerField.getFirstError("username")}
                                     />
-                                </div>
+                                </Box>
                             )}
 
-                            <div className={kcClsx("kcFormGroupClass", "kcFormSettingClass")}>
+                            <Box className={kcClsx("kcFormGroupClass", "kcFormSettingClass")}>
                                 {realm.rememberMe && !usernameHidden && (
                                     <FormControlLabel
                                         control={<Checkbox tabIndex={3} name="rememberMe" defaultChecked={!!login.rememberMe} />}
                                         label={msg("rememberMe")}
                                     />
                                 )}
-                            </div>
+                            </Box>
 
-                            <div id="kc-form-buttons" className={kcClsx("kcFormGroupClass")}>
+                            <Box id="kc-form-buttons" className={kcClsx("kcFormGroupClass")}>
                                 <Button
                                     sx={{ width: "100%" }}
                                     tabIndex={4}
@@ -138,29 +140,29 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                                 >
                                     {msgStr("doLogIn")}
                                 </Button>
-                            </div>
-                        </form>
+                            </Box>
+                        </Box>
                     )}
-                </div>
-            </div>
+                </Box>
+            </Box>
 
             {enableWebAuthnConditionalUI && (
                 <>
-                    <form id="webauth" action={url.loginAction} method="post">
+                    <Box component="form" id="webauth" action={url.loginAction} method="post">
                         <input type="hidden" id="clientDataJSON" name="clientDataJSON" />
                         <input type="hidden" id="authenticatorData" name="authenticatorData" />
                         <input type="hidden" id="signature" name="signature" />
                         <input type="hidden" id="credentialId" name="credentialId" />
                         <input type="hidden" id="userHandle" name="userHandle" />
                         <input type="hidden" id="error" name="error" />
-                    </form>
+                    </Box>
 
                     {authenticators !== undefined && authenticators.authenticators.length !== 0 && (
-                        <form id="authn_select" className={kcClsx("kcFormClass")}>
+                        <Box component="form" id="authn_select" className={kcClsx("kcFormClass")}>
                             {authenticators.authenticators.map((authenticator, i) => (
                                 <input key={i} type="hidden" name="authn_use_chk" readOnly value={authenticator.credentialId} />
                             ))}
-                        </form>
+                        </Box>
                     )}
 
                     <br />

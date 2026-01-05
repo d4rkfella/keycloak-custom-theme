@@ -23,15 +23,15 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
             <Box id="kc-terms-text" sx={{ mb: 3 }}>
                 <Typography variant="body1">{msg("termsText")}</Typography>
             </Box>
-            <form className="form-actions" action={url.loginAction} method="POST">
+            <Box component="form" className="form-actions" action={url.loginAction} method="POST">
                 <Button sx={{ width: "100%", mb: 1 }} variant="contained" name="accept" id="kc-accept" type="submit">
                     {msg("doAccept")}
                 </Button>
                 <Button sx={{ width: "100%" }} variant="contained" name="cancel" id="kc-decline" type="submit" color="error">
                     {msg("doDecline")}
                 </Button>
-            </form>
-            <div className="clearfix" />
+            </Box>
+            <Box className="clearfix" />
         </Template>
     );
 }

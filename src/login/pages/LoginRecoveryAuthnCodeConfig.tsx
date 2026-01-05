@@ -130,7 +130,7 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
             </Box>
 
             {/* Form */}
-            <form action={url.loginAction} id="kc-recovery-codes-settings-form" method="post">
+            <Box component="form" action={url.loginAction} id="kc-recovery-codes-settings-form" method="post">
                 <input type="hidden" name="generatedRecoveryAuthnCodes" value={recoveryAuthnCodesConfigBean.generatedRecoveryAuthnCodesAsString} />
                 <input type="hidden" name="generatedAt" value={recoveryAuthnCodesConfigBean.generatedAt} />
                 <input type="hidden" id="userLabel" name="userLabel" value={msgStr("recovery-codes-label-default")} />
@@ -175,7 +175,7 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
                         {msg("recovery-codes-action-complete")}
                     </Button>
                 )}
-            </form>
+            </Box>
         </Template>
     );
 }

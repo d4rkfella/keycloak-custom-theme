@@ -46,8 +46,8 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                 method="post"
             >
                 {otpLogin.userOtpCredentials.length > 1 && (
-                    <div className={kcClsx("kcFormGroupClass")}>
-                        <div className={kcClsx("kcInputWrapperClass")}>
+                    <Box className={kcClsx("kcFormGroupClass")}>
+                        <Box className={kcClsx("kcInputWrapperClass")}>
                             {otpLogin.userOtpCredentials.map((otpCredential, index) => (
                                 <FormControlLabel
                                     key={index}
@@ -96,12 +96,12 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                                     }
                                 />
                             ))}
-                        </div>
-                    </div>
+                        </Box>
+                    </Box>
                 )}
 
-                <div className={kcClsx("kcFormGroupClass")}>
-                    <div className={kcClsx("kcInputWrapperClass")}>
+                <Box className={kcClsx("kcFormGroupClass")}>
+                    <Box className={kcClsx("kcInputWrapperClass")}>
                         <TextField
                             sx={{
                                 width: "100%",
@@ -127,14 +127,14 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                                 }}
                             />
                         )}
-                    </div>
-                </div>
+                    </Box>
+                </Box>
 
-                <div className={kcClsx("kcFormGroupClass")}>
-                    <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
-                        <div className={kcClsx("kcFormOptionsWrapperClass")}></div>
-                    </div>
-                    <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
+                <Box className={kcClsx("kcFormGroupClass")}>
+                    <Box id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
+                        <Box className={kcClsx("kcFormOptionsWrapperClass")}></Box>
+                    </Box>
+                    <Box id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
                         <Button
                             sx={{ width: "100%" }}
                             variant="contained"
@@ -146,8 +146,8 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                         >
                             {msg("doLogIn")}
                         </Button>
-                    </div>
-                </div>
+                    </Box>
+                </Box>
             </form>
         </Template>
     );

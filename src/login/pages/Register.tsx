@@ -59,7 +59,7 @@ export default function Register(props: RegisterProps) {
             displayMessage={messagesPerField.exists("global")}
             displayRequiredFields
         >
-            <form id="kc-register-form" className={kcClsx("kcFormClass")} action={url.registrationAction} method="post">
+            <Box component="form" id="kc-register-form" className={kcClsx("kcFormClass")} action={url.registrationAction} method="post">
                 <UserProfileFormFields
                     kcContext={kcContext}
                     i18n={i18n}
@@ -77,23 +77,23 @@ export default function Register(props: RegisterProps) {
                     />
                 )}
                 {recaptchaRequired && (recaptchaVisible || recaptchaAction === undefined) && (
-                    <div className="form-group">
-                        <div className={kcClsx("kcInputWrapperClass")}>
-                            <div className="g-recaptcha" data-size="compact" data-sitekey={recaptchaSiteKey} data-action={recaptchaAction}></div>
-                        </div>
-                    </div>
+                    <Box className="form-group">
+                        <Box className={kcClsx("kcInputWrapperClass")}>
+                            <Box className="g-recaptcha" data-size="compact" data-sitekey={recaptchaSiteKey} data-action={recaptchaAction}></Box>
+                        </Box>
+                    </Box>
                 )}
-                <div className={kcClsx("kcFormGroupClass")}>
-                    <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
-                        <div className={kcClsx("kcFormOptionsWrapperClass")}>
+                <Box className={kcClsx("kcFormGroupClass")}>
+                    <Box id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
+                        <Box className={kcClsx("kcFormOptionsWrapperClass")}>
                             <span>
                                 <Link href={url.loginUrl}>{msg("backToLogin")}</Link>
                             </span>
-                        </div>
-                    </div>
+                        </Box>
+                    </Box>
 
                     {recaptchaRequired && !recaptchaVisible && recaptchaAction !== undefined ? (
-                        <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
+                        <Box id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
                             <Button
                                 sx={{ width: "100%" }}
                                 variant="contained"
@@ -106,9 +106,9 @@ export default function Register(props: RegisterProps) {
                             >
                                 {msg("doRegister")}
                             </Button>
-                        </div>
+                        </Box>
                     ) : (
-                        <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
+                        <Box id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
                             <Button
                                 sx={{ width: "100%" }}
                                 variant="contained"
@@ -118,10 +118,10 @@ export default function Register(props: RegisterProps) {
                             >
                                 {msg("doRegister")}
                             </Button>
-                        </div>
+                        </Box>
                     )}
-                </div>
-            </form>
+                </Box>
+            </Box>
         </Template>
     );
 }
@@ -140,14 +140,14 @@ function TermsAcceptance(props: {
     return (
         <>
             <Box className="form-group" sx={{ mb: 2 }}>
-                <div className={kcClsx("kcInputWrapperClass")}>
+                <Box className={kcClsx("kcInputWrapperClass")}>
                     <Typography variant="h6" sx={{ mb: 1 }}>
                         {msg("termsTitle")}
                     </Typography>
                     <Box id="kc-registration-terms-text" sx={{ mb: 2 }}>
                         <Typography variant="body2">{msg("termsText")}</Typography>
                     </Box>
-                </div>
+                </Box>
             </Box>
             <Box className="form-group" sx={{ mb: 2 }}>
                 <FormControlLabel

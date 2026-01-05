@@ -54,9 +54,10 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
             headerNode={msg("doLogIn")}
             displayMessage={!messagesPerField.existsError("password")}
         >
-            <div id="kc-form">
-                <div id="kc-form-wrapper">
-                    <form
+            <Box id="kc-form">
+                <Box id="kc-form-wrapper">
+                    <Box
+                        component="form"
                         id="kc-form-login"
                         onSubmit={() => {
                             setIsLoginButtonDisabled(true);
@@ -112,7 +113,7 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
                             )}
                         </Box>
 
-                        <div id="kc-form-buttons">
+                        <Box id="kc-form-buttons">
                             <Button
                                 sx={{ width: "100%" }}
                                 tabIndex={4}
@@ -125,28 +126,28 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
                             >
                                 {msg("doLogIn")}
                             </Button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                        </Box>
+                    </Box>
+                </Box>
+            </Box>
             {enableWebAuthnConditionalUI && (
                 <>
-                    <form id="webauth" action={url.loginAction} method="post">
+                    <Box component="form" id="webauth" action={url.loginAction} method="post">
                         <input type="hidden" id="clientDataJSON" name="clientDataJSON" />
                         <input type="hidden" id="authenticatorData" name="authenticatorData" />
                         <input type="hidden" id="signature" name="signature" />
                         <input type="hidden" id="credentialId" name="credentialId" />
                         <input type="hidden" id="userHandle" name="userHandle" />
                         <input type="hidden" id="error" name="error" />
-                    </form>
+                    </Box>
 
                     {authenticators !== undefined && authenticators.authenticators.length !== 0 && (
                         <>
-                            <form id="authn_select" className={kcClsx("kcFormClass")}>
+                            <Box component="form" id="authn_select" className={kcClsx("kcFormClass")}>
                                 {authenticators.authenticators.map((authenticator, i) => (
                                     <input key={i} type="hidden" name="authn_use_chk" readOnly value={authenticator.credentialId} />
                                 ))}
-                            </form>
+                            </Box>
                         </>
                     )}
 

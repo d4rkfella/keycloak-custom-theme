@@ -22,8 +22,8 @@ export default function SelectAuthenticator(props: PageProps<Extract<KcContext, 
             displayInfo={false}
             headerNode={msg("loginChooseAuthenticator")}
         >
-            <form id="kc-select-credential-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <div className={kcClsx("kcSelectAuthListClass")}>
+            <Box component="form" id="kc-select-credential-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
+                <Box className={kcClsx("kcSelectAuthListClass")}>
                     {auth.authenticationSelections.map((authenticationSelection, i) => (
                         <Button
                             key={i}
@@ -74,8 +74,8 @@ export default function SelectAuthenticator(props: PageProps<Extract<KcContext, 
                             </Box>
                         </Button>
                     ))}
-                </div>
-            </form>
+                </Box>
+            </Box>
         </Template>
     );
 }

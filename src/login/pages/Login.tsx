@@ -118,10 +118,11 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                 </>
             }
         >
-            <div id="kc-form">
-                <div id="kc-form-wrapper">
+            <Box id="kc-form">
+                <Box id="kc-form-wrapper">
                     {realm.password && (
-                        <form
+                        <Box
+                            component="form"
                             id="kc-form-login"
                             onSubmit={() => {
                                 setIsLoginButtonDisabled(true);
@@ -215,7 +216,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                 )}
                             </Box>
 
-                            <div id="kc-form-buttons" className={kcClsx("kcFormGroupClass")}>
+                            <Box id="kc-form-buttons" className={kcClsx("kcFormGroupClass")}>
                                 <input type="hidden" id="id-hidden-input" name="credentialId" value={auth.selectedCredential} />
                                 <Button
                                     sx={{ width: "100%" }}
@@ -228,39 +229,36 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                 >
                                     {msg("doLogIn")}
                                 </Button>
-                            </div>
-                        </form>
+                            </Box>
+                        </Box>
                     )}
-                </div>
-            </div>
+                </Box>
+            </Box>
             {enableWebAuthnConditionalUI && (
                 <>
-                    <form id="webauth" action={url.loginAction} method="post">
+                    <Box component="form" id="webauth" action={url.loginAction} method="post">
                         <input type="hidden" id="clientDataJSON" name="clientDataJSON" />
                         <input type="hidden" id="authenticatorData" name="authenticatorData" />
                         <input type="hidden" id="signature" name="signature" />
                         <input type="hidden" id="credentialId" name="credentialId" />
                         <input type="hidden" id="userHandle" name="userHandle" />
                         <input type="hidden" id="error" name="error" />
-                    </form>
+                    </Box>
 
                     {authenticators !== undefined && authenticators.authenticators.length !== 0 && (
                         <>
-                            <form id="authn_select" className={kcClsx("kcFormClass")}>
+                            <Box component="form" id="authn_select" className={kcClsx("kcFormClass")}>
                                 {authenticators.authenticators.map((authenticator, i) => (
                                     <input key={i} type="hidden" name="authn_use_chk" readOnly value={authenticator.credentialId} />
                                 ))}
-                            </form>
+                            </Box>
                         </>
                     )}
                     <br />
 
-                    <input
-                        id={webAuthnButtonId}
-                        type="button"
-                        className={kcClsx("kcButtonClass", "kcButtonDefaultClass", "kcButtonBlockClass", "kcButtonLargeClass")}
-                        value={msgStr("passkey-doAuthenticate")}
-                    />
+                    <Button id={webAuthnButtonId} variant="outlined" size="large" sx={{ width: "100%" }}>
+                        {msgStr("passkey-doAuthenticate")}
+                    </Button>
                 </>
             )}
         </Template>

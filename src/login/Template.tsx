@@ -9,6 +9,7 @@ import type { KcContext } from "./KcContext";
 import { useStyles } from "tss-react/mui";
 import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
@@ -54,7 +55,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     }
 
     return (
-        <div
+        <Box
             className={cx(
                 kcClsx("kcLoginClass"),
                 css({
@@ -65,7 +66,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 })
             )}
         >
-            <div
+            <Box
                 className={css({
                     backgroundColor: "rgba(0, 0, 0, 0.7)",
                     padding: theme.spacing(5),
@@ -86,21 +87,21 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                 {headerNode}
                             </Typography>
                         ) : (
-                            <div id="kc-username" className={kcClsx("kcFormGroupClass")}>
+                            <Box id="kc-username" className={kcClsx("kcFormGroupClass")}>
                                 <label id="kc-attempted-username">{auth.attemptedUsername}</label>
                                 <a id="reset-login" href={url.loginRestartFlowUrl} aria-label={msgStr("restartLoginTooltip")}>
-                                    <div className="kc-login-tooltip">
+                                    <Box className="kc-login-tooltip">
                                         <i className={kcClsx("kcResetFlowIcon")}></i>
                                         <span className="kc-tooltip-text">{msg("restartLoginTooltip")}</span>
-                                    </div>
+                                    </Box>
                                 </a>
-                            </div>
+                            </Box>
                         );
                         return node;
                     })()}
                 </header>
-                <div id="kc-content">
-                    <div id="kc-content-wrapper">
+                <Box id="kc-content">
+                    <Box id="kc-content-wrapper">
                         {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
                         {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
                             <Alert
@@ -120,8 +121,8 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                         )}
                         {children}
                         {auth !== undefined && auth.showTryAnotherWayLink && (
-                            <form id="kc-select-try-another-way-form" action={url.loginAction} method="post">
-                                <div className={kcClsx("kcFormGroupClass")}>
+                            <Box component="form" id="kc-select-try-another-way-form" action={url.loginAction} method="post">
+                                <Box className={kcClsx("kcFormGroupClass")}>
                                     <input type="hidden" name="tryAnotherWay" value="on" />
                                     <a
                                         href="#"
@@ -133,23 +134,23 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                     >
                                         {msg("doTryAnotherWay")}
                                     </a>
-                                </div>
-                            </form>
+                                </Box>
+                            </Box>
                         )}
                         {socialProvidersNode}
                         {displayInfo && (
-                            <div
+                            <Box
                                 className={css({
                                     marginTop: theme.spacing(5),
                                     textAlign: "center"
                                 })}
                             >
                                 {infoNode}
-                            </div>
+                            </Box>
                         )}
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </Box>
+                </Box>
+            </Box>
+        </Box>
     );
 }

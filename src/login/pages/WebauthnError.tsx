@@ -24,10 +24,10 @@ export default function WebauthnError(props: PageProps<Extract<KcContext, { page
             headerNode={<Typography variant="h5">{msg("webauthn-error-title")}</Typography>}
         >
             {/* Hidden retry form */}
-            <form id="kc-error-credential-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
+            <Box component="form" id="kc-error-credential-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
                 <input type="hidden" id="executionValue" name="authenticationExecution" />
                 <input type="hidden" id="isSetRetry" name="isSetRetry" />
-            </form>
+            </Box>
 
             {/* Retry Button */}
             <Box sx={{ mt: 2 }}>
@@ -51,13 +51,13 @@ export default function WebauthnError(props: PageProps<Extract<KcContext, { page
 
             {/* Cancel Button for App-Initiated Action */}
             {isAppInitiatedAction && (
-                <form id="kc-webauthn-settings-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
+                <Box component="form" id="kc-webauthn-settings-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
                     <Box>
                         <Button fullWidth variant="outlined" size="large" type="submit" name="cancel-aia" value="true" id="cancelWebAuthnAIA">
                             {msgStr("doCancel")}
                         </Button>
                     </Box>
-                </form>
+                </Box>
             )}
         </Template>
     );

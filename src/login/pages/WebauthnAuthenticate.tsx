@@ -73,24 +73,24 @@ export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext,
         >
             <Box id="kc-form-webauthn" className={kcClsx("kcFormClass")}>
                 {/* Hidden WebAuthn form */}
-                <form id="webauth" action={url.loginAction} method="post">
+                <Box component="form" id="webauth" action={url.loginAction} method="post">
                     <input type="hidden" id="clientDataJSON" name="clientDataJSON" />
                     <input type="hidden" id="authenticatorData" name="authenticatorData" />
                     <input type="hidden" id="signature" name="signature" />
                     <input type="hidden" id="credentialId" name="credentialId" />
                     <input type="hidden" id="userHandle" name="userHandle" />
                     <input type="hidden" id="error" name="error" />
-                </form>
+                </Box>
 
                 <Box className={clsx(kcClsx("kcFormGroupClass"), "no-bottom-margin")}>
                     {authenticators && (
                         <>
                             {/* Hidden authenticator selector form */}
-                            <form id="authn_select" className={kcClsx("kcFormClass")}>
+                            <Box component="form" id="authn_select" className={kcClsx("kcFormClass")}>
                                 {authenticators.authenticators.map(authenticator => (
                                     <input key={authenticator.credentialId} type="hidden" name="authn_use_chk" value={authenticator.credentialId} />
                                 ))}
-                            </form>
+                            </Box>
 
                             {shouldDisplayAuthenticators && (
                                 <>

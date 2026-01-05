@@ -98,7 +98,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                     </li>
                 </ol>
 
-                <form action={url.loginAction} className={kcClsx("kcFormClass")} id="kc-totp-settings-form" method="post">
+                <Box component="form" action={url.loginAction} className={kcClsx("kcFormClass")} id="kc-totp-settings-form" method="post">
                     <Box sx={{ mb: 2 }}>
                         <TextField
                             sx={{
@@ -175,7 +175,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                             {msg("doSubmit")}
                         </Button>
                     )}
-                </form>
+                </Box>
             </>
         </Template>
     );

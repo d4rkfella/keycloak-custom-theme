@@ -6,6 +6,7 @@ import type { I18n } from "../i18n";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
+import Box from "@mui/material/Box";
 
 export default function LoginResetPassword(props: PageProps<Extract<KcContext, { pageId: "login-reset-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -29,9 +30,9 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
             infoNode={realm.duplicateEmailsAllowed ? msg("emailInstructionUsername") : msg("emailInstruction")}
             headerNode={msg("emailForgotTitle")}
         >
-            <form id="kc-reset-password-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <div className={kcClsx("kcFormGroupClass")}>
-                    <div className={kcClsx("kcInputWrapperClass")}>
+            <Box component="form" id="kc-reset-password-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
+                <Box className={kcClsx("kcFormGroupClass")}>
+                    <Box className={kcClsx("kcInputWrapperClass")}>
                         <TextField
                             sx={{
                                 width: "100%",
@@ -63,11 +64,11 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                                 }}
                             />
                         )}
-                    </div>
-                </div>
-                <div className={kcClsx("kcFormGroupClass", "kcFormSettingClass")}>
-                    <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
-                        <div className={kcClsx("kcFormOptionsWrapperClass")}>
+                    </Box>
+                </Box>
+                <Box className={kcClsx("kcFormGroupClass", "kcFormSettingClass")}>
+                    <Box id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
+                        <Box className={kcClsx("kcFormOptionsWrapperClass")}>
                             <span>
                                 <Link
                                     sx={{
@@ -81,9 +82,9 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                                     {msg("backToLogin")}
                                 </Link>
                             </span>
-                        </div>
-                    </div>
-                    <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
+                        </Box>
+                    </Box>
+                    <Box id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
                         <Button
                             sx={{
                                 width: "100%"
@@ -94,9 +95,9 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                         >
                             {msgStr("doSubmit")}
                         </Button>
-                    </div>
-                </div>
-            </form>
+                    </Box>
+                </Box>
+            </Box>
         </Template>
     );
 }

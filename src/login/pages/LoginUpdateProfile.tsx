@@ -37,7 +37,7 @@ export default function LoginUpdateProfile(props: LoginUpdateProfileProps) {
             headerNode={msg("loginProfileTitle")}
             displayMessage={messagesPerField.exists("global")}
         >
-            <form id="kc-update-profile-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
+            <Box component="form" id="kc-update-profile-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
                 <UserProfileFormFields
                     kcContext={kcContext}
                     i18n={i18n}
@@ -45,11 +45,11 @@ export default function LoginUpdateProfile(props: LoginUpdateProfileProps) {
                     onIsFormSubmittableValueChange={setIsFormSubmittable}
                     doMakeUserConfirmPassword={doMakeUserConfirmPassword}
                 />
-                <div className={kcClsx("kcFormGroupClass")}>
-                    <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
-                        <div className={kcClsx("kcFormOptionsWrapperClass")} />
-                    </div>
-                    <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
+                <Box className={kcClsx("kcFormGroupClass")}>
+                    <Box id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
+                        <Box className={kcClsx("kcFormOptionsWrapperClass")} />
+                    </Box>
+                    <Box id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
                         {isAppInitiatedAction ? (
                             <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
                                 <Button sx={{ flex: 1 }} variant="contained" disabled={!isFormSubmittable} type="submit" size="large">
@@ -64,9 +64,9 @@ export default function LoginUpdateProfile(props: LoginUpdateProfileProps) {
                                 {msg("doSubmit")}
                             </Button>
                         )}
-                    </div>
-                </div>
-            </form>
+                    </Box>
+                </Box>
+            </Box>
         </Template>
     );
 }
