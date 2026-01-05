@@ -1,0 +1,196 @@
+import { getKcClsx, KcClsx } from "keycloakify/login/lib/kcClsx";
+import { kcSanitize } from "keycloakify/lib/kcSanitize";
+import type { PageProps } from "keycloakify/login/pages/PageProps";
+import type { KcContext } from "../KcContext";
+import type { I18n } from "../i18n";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Link from "@mui/material/Link";
+import Box from "@mui/material/Box";
+
+export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pageId: "login-config-totp.ftl" }>, I18n>) {
+    const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
+
+    const { kcClsx } = getKcClsx({
+        doUseDefaultCss,
+        classes
+    });
+
+    const { url, isAppInitiatedAction, totp, mode, messagesPerField } = kcContext;
+
+    const { msg, advancedMsg } = i18n;
+
+    return (
+        <Template
+            kcContext={kcContext}
+            i18n={i18n}
+            doUseDefaultCss={doUseDefaultCss}
+            classes={classes}
+            headerNode={msg("loginTotpTitle")}
+            displayMessage={!messagesPerField.existsError("totp", "userLabel")}
+        >
+            <>
+                <ol id="kc-totp-settings">
+                    <li>
+                        <p>{msg("loginTotpStep1")}</p>
+
+                        <ul id="kc-totp-supported-apps">
+                            {totp.supportedApplications.map(app => (
+                                <li key={app}>{advancedMsg(app)}</li>
+                            ))}
+                        </ul>
+                    </li>
+
+                    {mode == "manual" ? (
+                        <>
+                            <li>
+                                <p>{msg("loginTotpManualStep2")}</p>
+                                <p>
+                                    <span id="kc-totp-secret-key">{totp.totpSecretEncoded}</span>
+                                </p>
+                                <p>
+                                    <Link href={totp.qrUrl} id="mode-barcode">
+                                        {msg("loginTotpScanBarcode")}
+                                    </Link>
+                                </p>
+                            </li>
+                            <li>
+                                <p>{msg("loginTotpManualStep3")}</p>
+                                <ul>
+                                    <li id="kc-totp-type">
+                                        {msg("loginTotpType")}: {msg(`loginTotp.${totp.policy.type}`)}
+                                    </li>
+                                    <li id="kc-totp-algorithm">
+                                        {msg("loginTotpAlgorithm")}: {totp.policy.getAlgorithmKey()}
+                                    </li>
+                                    <li id="kc-totp-digits">
+                                        {msg("loginTotpDigits")}: {totp.policy.digits}
+                                    </li>
+                                    {totp.policy.type === "totp" ? (
+                                        <li id="kc-totp-period">
+                                            {msg("loginTotpInterval")}: {totp.policy.period}
+                                        </li>
+                                    ) : (
+                                        <li id="kc-totp-counter">
+                                            {msg("loginTotpCounter")}: {totp.policy.initialCounter}
+                                        </li>
+                                    )}
+                                </ul>
+                            </li>
+                        </>
+                    ) : (
+                        <li>
+                            <p>{msg("loginTotpStep2")}</p>
+                            <img id="kc-totp-secret-qr-code" src={`data:image/png;base64, ${totp.totpSecretQrCode}`} alt="Figure: Barcode" />
+                            <br />
+                            <p>
+                                <Link href={totp.manualUrl} id="mode-manual">
+                                    {msg("loginTotpUnableToScan")}
+                                </Link>
+                            </p>
+                        </li>
+                    )}
+                    <li>
+                        <p>{msg("loginTotpStep3")}</p>
+                        <p>{msg("loginTotpStep3DeviceName")}</p>
+                    </li>
+                </ol>
+
+                <form action={url.loginAction} className={kcClsx("kcFormClass")} id="kc-totp-settings-form" method="post">
+                    <Box sx={{ mb: 2 }}>
+                        <TextField
+                            sx={{
+                                width: "100%",
+                                minWidth: 350
+                            }}
+                            variant="outlined"
+                            type="text"
+                            id="totp"
+                            name="totp"
+                            label={msg("authenticatorCode")}
+                            required
+                            autoComplete="off"
+                            error={messagesPerField.existsError("totp")}
+                            helperText={
+                                messagesPerField.existsError("totp") && (
+                                    <span
+                                        id="input-error-otp-code"
+                                        aria-live="polite"
+                                        dangerouslySetInnerHTML={{
+                                            __html: kcSanitize(messagesPerField.get("totp"))
+                                        }}
+                                    />
+                                )
+                            }
+                        />
+                        <input type="hidden" id="totpSecret" name="totpSecret" value={totp.totpSecret} />
+                        {mode && <input type="hidden" id="mode" value={mode} />}
+                    </Box>
+
+                    <Box sx={{ mb: 2 }}>
+                        <TextField
+                            sx={{
+                                width: "100%",
+                                minWidth: 350
+                            }}
+                            variant="outlined"
+                            type="text"
+                            id="userLabel"
+                            name="userLabel"
+                            required={totp.otpCredentials.length >= 1}
+                            label={msg("loginTotpDeviceName")}
+                            autoComplete="off"
+                            error={messagesPerField.existsError("userLabel")}
+                            helperText={
+                                messagesPerField.existsError("userLabel") && (
+                                    <span
+                                        id="input-error-otp-label"
+                                        aria-live="polite"
+                                        dangerouslySetInnerHTML={{
+                                            __html: kcSanitize(messagesPerField.get("userLabel"))
+                                        }}
+                                    />
+                                )
+                            }
+                        />
+                    </Box>
+
+                    <Box>
+                        <LogoutOtherSessions kcClsx={kcClsx} i18n={i18n} />
+                    </Box>
+
+                    {isAppInitiatedAction ? (
+                        <>
+                            <Button sx={{ width: "100%", mb: 1 }} variant="contained" type="submit" id="saveTOTPBtn">
+                                {msg("doSubmit")}
+                            </Button>
+                            <Button sx={{ width: "100%" }} variant="outlined" type="submit" id="cancelTOTPBtn" name="cancel-aia" value="true">
+                                {msg("doCancel")}
+                            </Button>
+                        </>
+                    ) : (
+                        <Button size="large" sx={{ width: "100%" }} variant="contained" type="submit" id="saveTOTPBtn">
+                            {msg("doSubmit")}
+                        </Button>
+                    )}
+                </form>
+            </>
+        </Template>
+    );
+}
+
+function LogoutOtherSessions(props: { kcClsx: KcClsx; i18n: I18n }) {
+    const { i18n } = props;
+
+    const { msg } = i18n;
+
+    return (
+        <FormControlLabel
+            sx={{ mb: 2 }}
+            control={<Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked={true} />}
+            label={msg("logoutOtherSessions")}
+        />
+    );
+}

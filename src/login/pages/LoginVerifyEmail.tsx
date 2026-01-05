@@ -1,0 +1,36 @@
+import type { PageProps } from "keycloakify/login/pages/PageProps";
+import type { KcContext } from "../KcContext";
+import type { I18n } from "../i18n";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
+
+export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { pageId: "login-verify-email.ftl" }>, I18n>) {
+    const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
+
+    const { msg } = i18n;
+    const { url, user } = kcContext;
+
+    return (
+        <Template
+            kcContext={kcContext}
+            i18n={i18n}
+            doUseDefaultCss={doUseDefaultCss}
+            classes={classes}
+            displayInfo
+            headerNode={msg("emailVerifyTitle")}
+            infoNode={
+                <Typography className="instruction" sx={{ mt: 2 }} variant="body2">
+                    {msg("emailVerifyInstruction2")}
+                    <br />
+                    <Link href={url.loginAction}>{msg("doClickHere")}</Link>
+                    &nbsp;
+                    {msg("emailVerifyInstruction3")}
+                </Typography>
+            }
+        >
+            <Typography className="instruction" variant="body1">
+                {msg("emailVerifyInstruction1", user?.email ?? "")}
+            </Typography>
+        </Template>
+    );
+}

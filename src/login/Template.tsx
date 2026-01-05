@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { clsx } from "keycloakify/tools/clsx";
 import type { TemplateProps } from "keycloakify/login/TemplateProps";
 import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
@@ -8,14 +7,13 @@ import { useInitialize } from "keycloakify/login/Template.useInitialize";
 import type { I18n } from "./i18n";
 import type { KcContext } from "./KcContext";
 import { useStyles } from "tss-react/mui";
-import Typography from '@mui/material/Typography';
-import Alert from '@mui/material/Alert';
+import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
         displayInfo = false,
         displayMessage = true,
-        displayRequiredFields = false,
         headerNode,
         socialProvidersNode = null,
         infoNode = null,
@@ -49,38 +47,42 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     });
 
     const { isReadyToRender } = useInitialize({ kcContext, doUseDefaultCss });
-    
+
     const { css, theme, cx } = useStyles();
     if (!isReadyToRender) {
         return null;
     }
 
     return (
-        <div 
-            className={
-                cx(
-                    kcClsx("kcLoginClass"),
-                    css({
-                        height: "100vh",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    })
-                )
-            }
-            >
-
+        <div
+            className={cx(
+                kcClsx("kcLoginClass"),
+                css({
+                    minHeight: "100vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center"
+                })
+            )}
+        >
             <div
                 className={css({
-                    backgroundColor: "rgba(0, 0, 0, 0.6)",
-                    padding: theme.spacing(6),
+                    backgroundColor: "rgba(0, 0, 0, 0.7)",
+                    padding: theme.spacing(5),
                     borderRadius: theme.shape.borderRadius
                 })}
             >
                 <header className={kcClsx("kcFormHeaderClass")}>
                     {(() => {
                         const node = !(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? (
-                            <Typography id="kc-page-title" variant="h1" sx={{ pb: 3 }}>
+                            <Typography
+                                id="kc-page-title"
+                                variant="h1"
+                                sx={{
+                                    pb: 3,
+                                    textAlign: "center"
+                                }}
+                            >
                                 {headerNode}
                             </Typography>
                         ) : (
@@ -94,21 +96,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                 </a>
                             </div>
                         );
-
-                        if (displayRequiredFields) {
-                            return (
-                                <div className={kcClsx("kcContentWrapperClass")}>
-                                    <div className={clsx(kcClsx("kcLabelWrapperClass"), "subtitle")}>
-                                        <span className="subtitle">
-                                            <span className="required">*</span>
-                                            {msg("requiredFields")}
-                                        </span>
-                                    </div>
-                                    <div className="col-md-10">{node}</div>
-                                </div>
-                            );
-                        }
-
                         return node;
                     })()}
                 </header>
@@ -116,13 +103,13 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                     <div id="kc-content-wrapper">
                         {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
                         {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
-                            <Alert 
+                            <Alert
                                 severity={message.type}
                                 sx={{
-                                    mb: 3,
-                                    mt: 3
+                                    mb: 4,
+                                    mt: 0
                                 }}
-                                >
+                            >
                                 <span
                                     className={kcClsx("kcAlertTitleClass")}
                                     dangerouslySetInnerHTML={{
@@ -153,8 +140,8 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                         {displayInfo && (
                             <div
                                 className={css({
-                                marginTop: theme.spacing(5),
-                                textAlign: "center"
+                                    marginTop: theme.spacing(5),
+                                    textAlign: "center"
                                 })}
                             >
                                 {infoNode}
