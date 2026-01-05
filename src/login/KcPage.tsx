@@ -1,4 +1,4 @@
-import "./assets/fonts/geist/main.css";
+import "./assets/fonts/roboto/main.css";
 import { Suspense, lazy } from "react";
 import type { ClassKey } from "keycloakify/login";
 import type { KcContext } from "./KcContext";
