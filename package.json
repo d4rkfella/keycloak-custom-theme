@@ -1,6 +1,6 @@
 {
     "name": "keycloakify-custom-theme",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Custom theme for Keycloak made with Keycloakify 11",
     "repository": {
         "type": "git",

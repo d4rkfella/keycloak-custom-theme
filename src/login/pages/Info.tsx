@@ -29,7 +29,6 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
         >
             <Box id="kc-info-message">
                 <Typography
-                    className="instruction"
                     variant="body1"
                     dangerouslySetInnerHTML={{
                         __html: kcSanitize(

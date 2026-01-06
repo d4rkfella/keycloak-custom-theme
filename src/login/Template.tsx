@@ -10,6 +10,10 @@ import { useStyles } from "tss-react/mui";
 import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import Tooltip from "@mui/material/Tooltip";
+import Link from "@mui/material/Link";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
@@ -69,37 +73,42 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
             <Box
                 className={css({
                     backgroundColor: "rgba(0, 0, 0, 0.7)",
-                    padding: theme.spacing(5),
+                    padding: theme.spacing(6),
                     borderRadius: theme.shape.borderRadius
                 })}
             >
-                <header className={kcClsx("kcFormHeaderClass")}>
+                <Box component="header" sx={{ mb: 1, display: "flex", width: "100%", justifyContent: "center" }}>
                     {(() => {
                         const node = !(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? (
                             <Typography
                                 id="kc-page-title"
-                                variant="h1"
+                                variant="h5"
                                 sx={{
-                                    pb: 3,
-                                    textAlign: "center"
+                                    pb: 3
                                 }}
                             >
                                 {headerNode}
                             </Typography>
                         ) : (
-                            <Box id="kc-username" className={kcClsx("kcFormGroupClass")}>
-                                <label id="kc-attempted-username">{auth.attemptedUsername}</label>
-                                <a id="reset-login" href={url.loginRestartFlowUrl} aria-label={msgStr("restartLoginTooltip")}>
-                                    <Box className="kc-login-tooltip">
-                                        <i className={kcClsx("kcResetFlowIcon")}></i>
-                                        <span className="kc-tooltip-text">{msg("restartLoginTooltip")}</span>
-                                    </Box>
-                                </a>
+                            <Box id="kc-username" sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "center", width: "100%" }}>
+                                <Typography id="kc-attempted-username" component="label" variant="h6">
+                                    {auth.attemptedUsername}
+                                </Typography>
+                                <Tooltip title={msg("restartLoginTooltip")} placement="right" disableInteractive>
+                                    <IconButton
+                                        id="reset-login"
+                                        href={url.loginRestartFlowUrl}
+                                        aria-label={msgStr("restartLoginTooltip")}
+                                        size="small"
+                                    >
+                                        <OpenInNewIcon fontSize="inherit" />
+                                    </IconButton>
+                                </Tooltip>
                             </Box>
                         );
                         return node;
                     })()}
-                </header>
+                </Box>
                 <Box id="kc-content">
                     <Box id="kc-content-wrapper">
                         {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
@@ -107,12 +116,11 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             <Alert
                                 severity={message.type}
                                 sx={{
-                                    mb: 4,
+                                    mb: 1,
                                     mt: 0
                                 }}
                             >
                                 <span
-                                    className={kcClsx("kcAlertTitleClass")}
                                     dangerouslySetInnerHTML={{
                                         __html: kcSanitize(message.summary)
                                     }}
@@ -122,18 +130,24 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                         {children}
                         {auth !== undefined && auth.showTryAnotherWayLink && (
                             <Box component="form" id="kc-select-try-another-way-form" action={url.loginAction} method="post">
-                                <Box className={kcClsx("kcFormGroupClass")}>
+                                <Box sx={{ mt: 2 }}>
                                     <input type="hidden" name="tryAnotherWay" value="on" />
-                                    <a
+                                    <Link
                                         href="#"
                                         id="try-another-way"
-                                        onClick={() => {
+                                        underline="hover"
+                                        onClick={e => {
+                                            e.preventDefault();
                                             document.forms["kc-select-try-another-way-form" as never].requestSubmit();
                                             return false;
                                         }}
+                                        sx={{
+                                            fontSize: "0.875rem",
+                                            cursor: "pointer"
+                                        }}
                                     >
                                         {msg("doTryAnotherWay")}
-                                    </a>
+                                    </Link>
                                 </Box>
                             </Box>
                         )}

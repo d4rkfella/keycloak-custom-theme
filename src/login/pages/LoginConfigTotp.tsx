@@ -9,6 +9,9 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 
 export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pageId: "login-config-totp.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -32,73 +35,115 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
             displayMessage={!messagesPerField.existsError("totp", "userLabel")}
         >
             <>
-                <ol id="kc-totp-settings">
-                    <li>
-                        <p>{msg("loginTotpStep1")}</p>
+                <List id="kc-totp-settings" component="ol" sx={{ pl: 3, mb: 1 }}>
+                    <ListItem component="li" sx={{ display: "list-item", listStyleType: "decimal", pl: 1 }}>
+                        <Typography variant="body1">{msg("loginTotpStep1")}</Typography>
 
-                        <ul id="kc-totp-supported-apps">
+                        <List id="kc-totp-supported-apps" component="ul" sx={{ pl: 3 }}>
                             {totp.supportedApplications.map(app => (
-                                <li key={app}>{advancedMsg(app)}</li>
+                                <ListItem key={app} component="li" sx={{ display: "list-item", listStyleType: "disc", pl: 0 }}>
+                                    <Typography variant="body2">{advancedMsg(app)}</Typography>
+                                </ListItem>
                             ))}
-                        </ul>
-                    </li>
+                        </List>
+                    </ListItem>
 
                     {mode == "manual" ? (
                         <>
-                            <li>
-                                <p>{msg("loginTotpManualStep2")}</p>
-                                <p>
-                                    <span id="kc-totp-secret-key">{totp.totpSecretEncoded}</span>
-                                </p>
-                                <p>
-                                    <Link href={totp.qrUrl} id="mode-barcode">
+                            <ListItem component="li" sx={{ display: "list-item", listStyleType: "decimal", pl: 1 }}>
+                                <Typography variant="body1" sx={{ mb: 1 }}>
+                                    {msg("loginTotpManualStep2")}
+                                </Typography>
+                                <Typography variant="body1" sx={{ mb: 1 }}>
+                                    <Box component="span" id="kc-totp-secret-key" sx={{ fontFamily: "monospace", fontWeight: "bold" }}>
+                                        {totp.totpSecretEncoded}
+                                    </Box>
+                                </Typography>
+                                <Typography variant="body1" sx={{ mb: 1 }}>
+                                    <Link href={totp.qrUrl} id="mode-barcode" underline="hover">
                                         {msg("loginTotpScanBarcode")}
                                     </Link>
-                                </p>
-                            </li>
-                            <li>
-                                <p>{msg("loginTotpManualStep3")}</p>
-                                <ul>
-                                    <li id="kc-totp-type">
-                                        {msg("loginTotpType")}: {msg(`loginTotp.${totp.policy.type}`)}
-                                    </li>
-                                    <li id="kc-totp-algorithm">
-                                        {msg("loginTotpAlgorithm")}: {totp.policy.getAlgorithmKey()}
-                                    </li>
-                                    <li id="kc-totp-digits">
-                                        {msg("loginTotpDigits")}: {totp.policy.digits}
-                                    </li>
+                                </Typography>
+                            </ListItem>
+                            <ListItem component="li" sx={{ display: "list-item", listStyleType: "decimal", pl: 1 }}>
+                                <Typography variant="body1" sx={{ mb: 1 }}>
+                                    {msg("loginTotpManualStep3")}
+                                </Typography>
+                                <List component="ul" sx={{ pl: 3 }}>
+                                    <ListItem component="li" id="kc-totp-type" sx={{ display: "list-item", listStyleType: "disc", pl: 0 }}>
+                                        <Typography variant="body2">
+                                            {msg("loginTotpType")}: {msg(`loginTotp.${totp.policy.type}`)}
+                                        </Typography>
+                                    </ListItem>
+                                    <ListItem component="li" id="kc-totp-algorithm" sx={{ display: "list-item", listStyleType: "disc", pl: 0 }}>
+                                        <Typography variant="body2">
+                                            {msg("loginTotpAlgorithm")}: {totp.policy.getAlgorithmKey()}
+                                        </Typography>
+                                    </ListItem>
+                                    <ListItem component="li" id="kc-totp-digits" sx={{ display: "list-item", listStyleType: "disc", pl: 0 }}>
+                                        <Typography variant="body2">
+                                            {msg("loginTotpDigits")}: {totp.policy.digits}
+                                        </Typography>
+                                    </ListItem>
                                     {totp.policy.type === "totp" ? (
-                                        <li id="kc-totp-period">
-                                            {msg("loginTotpInterval")}: {totp.policy.period}
-                                        </li>
+                                        <ListItem component="li" id="kc-totp-period" sx={{ display: "list-item", listStyleType: "disc", pl: 0 }}>
+                                            <Typography variant="body2">
+                                                {msg("loginTotpInterval")}: {totp.policy.period}
+                                            </Typography>
+                                        </ListItem>
                                     ) : (
-                                        <li id="kc-totp-counter">
-                                            {msg("loginTotpCounter")}: {totp.policy.initialCounter}
-                                        </li>
+                                        <ListItem component="li" id="kc-totp-counter" sx={{ display: "list-item", listStyleType: "disc", pl: 0 }}>
+                                            <Typography variant="body2">
+                                                {msg("loginTotpCounter")}: {totp.policy.initialCounter}
+                                            </Typography>
+                                        </ListItem>
                                     )}
-                                </ul>
-                            </li>
+                                </List>
+                            </ListItem>
                         </>
                     ) : (
-                        <li>
-                            <p>{msg("loginTotpStep2")}</p>
-                            <img id="kc-totp-secret-qr-code" src={`data:image/png;base64, ${totp.totpSecretQrCode}`} alt="Figure: Barcode" />
-                            <br />
-                            <p>
-                                <Link href={totp.manualUrl} id="mode-manual">
+                        <ListItem component="li" sx={{ display: "list-item", listStyleType: "decimal", pl: 1 }}>
+                            <Typography variant="body1" sx={{ mb: 2 }}>
+                                {msg("loginTotpStep2")}
+                            </Typography>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "flex-start",
+                                    mb: 1
+                                }}
+                            >
+                                <Box
+                                    component="img"
+                                    id="kc-totp-secret-qr-code"
+                                    src={`data:image/png;base64, ${totp.totpSecretQrCode}`}
+                                    alt="Figure: Barcode"
+                                    sx={{
+                                        maxWidth: "100%",
+                                        width: "150px",
+                                        height: "auto",
+                                        border: "1px solid",
+                                        borderColor: "divider",
+                                        borderRadius: 1
+                                    }}
+                                />
+                            </Box>
+                            <Typography variant="body2">
+                                <Link href={totp.manualUrl} id="mode-manual" underline="hover">
                                     {msg("loginTotpUnableToScan")}
                                 </Link>
-                            </p>
-                        </li>
+                            </Typography>
+                        </ListItem>
                     )}
-                    <li>
-                        <p>{msg("loginTotpStep3")}</p>
-                        <p>{msg("loginTotpStep3DeviceName")}</p>
-                    </li>
-                </ol>
+                    <ListItem component="li" sx={{ display: "list-item", listStyleType: "decimal", pl: 1 }}>
+                        <Typography variant="body1" sx={{ mb: 1 }}>
+                            {msg("loginTotpStep3")}
+                        </Typography>
+                        <Typography variant="body2">{msg("loginTotpStep3DeviceName")}</Typography>
+                    </ListItem>
+                </List>
 
-                <Box component="form" action={url.loginAction} className={kcClsx("kcFormClass")} id="kc-totp-settings-form" method="post">
+                <Box component="form" action={url.loginAction} id="kc-totp-settings-form" method="post">
                     <Box sx={{ mb: 2 }}>
                         <TextField
                             sx={{

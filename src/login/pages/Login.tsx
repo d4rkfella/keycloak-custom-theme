@@ -4,9 +4,7 @@
  */
 import { useState } from "react";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import { clsx } from "keycloakify/tools/clsx";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { useScript } from "keycloakify/login/pages/Login.useScript";
@@ -29,11 +27,6 @@ import Divider from "@mui/material/Divider";
 
 export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-
-    const { kcClsx } = getKcClsx({
-        doUseDefaultCss,
-        classes
-    });
 
     const { social, realm, url, usernameHidden, login, auth, registrationDisabled, messagesPerField, enableWebAuthnConditionalUI, authenticators } =
         kcContext;
@@ -105,9 +98,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                                 backgroundColor: "action.hover"
                                             }
                                         }}
-                                        startIcon={
-                                            p.iconClasses && <i className={clsx(p.iconClasses)} aria-hidden="true" style={{ fontSize: "20px" }} />
-                                        }
+                                        startIcon={p.iconClasses && <i aria-hidden="true" style={{ fontSize: "20px" }} />}
                                     >
                                         <span dangerouslySetInnerHTML={{ __html: kcSanitize(p.displayName) }} />
                                     </Button>
@@ -124,6 +115,9 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                         <Box
                             component="form"
                             id="kc-form-login"
+                            sx={{
+                                width: "100%"
+                            }}
                             onSubmit={() => {
                                 setIsLoginButtonDisabled(true);
                                 return true;
@@ -134,9 +128,9 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                             {!usernameHidden && (
                                 <TextField
                                     sx={{
+                                        pb: 1,
                                         width: "100%",
-                                        minWidth: 200,
-                                        pb: 1
+                                        minWidth: 300
                                     }}
                                     label={
                                         !realm.loginWithEmailAllowed
@@ -201,25 +195,35 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                 )}
                             </FormControl>
 
-                            <Box display="flex" alignItems="center" justifyContent="space-between">
+                            <Box sx={{ mt: 1 }} display="flex" alignItems="center" justifyContent="space-between">
                                 {realm.rememberMe && !usernameHidden && (
                                     <FormControlLabel
+                                        sx={{
+                                            my: 0,
+                                            mr: 0,
+                                            mt: 0
+                                        }}
                                         control={<Checkbox defaultChecked={!!login.rememberMe} tabIndex={5} name="rememberMe" />}
                                         label={msg("rememberMe")}
+                                        slotProps={{
+                                            typography: {
+                                                fontSize: "0.875rem" // 14px
+                                            }
+                                        }}
                                     />
                                 )}
 
                                 {realm.resetPasswordAllowed && (
-                                    <Link variant="button" underline="hover" tabIndex={6} href={url.loginResetCredentialsUrl}>
+                                    <Link underline="hover" tabIndex={6} sx={{ fontSize: "0.875rem" }} href={url.loginResetCredentialsUrl}>
                                         {msg("doForgotPassword")}
                                     </Link>
                                 )}
                             </Box>
 
-                            <Box id="kc-form-buttons" className={kcClsx("kcFormGroupClass")}>
+                            <Box id="kc-form-buttons">
                                 <input type="hidden" id="id-hidden-input" name="credentialId" value={auth.selectedCredential} />
                                 <Button
-                                    sx={{ width: "100%" }}
+                                    sx={{ width: "100%", mt: 3 }}
                                     tabIndex={7}
                                     variant="contained"
                                     type="submit"
@@ -247,7 +251,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
 
                     {authenticators !== undefined && authenticators.authenticators.length !== 0 && (
                         <>
-                            <Box component="form" id="authn_select" className={kcClsx("kcFormClass")}>
+                            <Box component="form" id="authn_select">
                                 {authenticators.authenticators.map((authenticator, i) => (
                                     <input key={i} type="hidden" name="authn_use_chk" readOnly value={authenticator.credentialId} />
                                 ))}

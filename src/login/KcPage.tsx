@@ -72,19 +72,6 @@ const theme = createTheme({
                     color: "#ffffff"
                 }
             }
-        },
-        MuiTypography: {
-            defaultProps: {
-                variantMapping: {
-                    h2: "h2",
-                    h3: "h2",
-                    h4: "h2",
-                    h5: "h2",
-                    h6: "h2",
-                    subtitle1: "h1",
-                    subtitle2: "h2"
-                }
-            }
         }
     }
 });
@@ -112,7 +99,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <Login
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "login-reset-password.ftl":
@@ -128,7 +115,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <LoginConfigTotp
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "login-otp.ftl":
@@ -160,7 +147,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <Info
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "error.ftl":
