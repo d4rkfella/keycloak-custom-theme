@@ -35,7 +35,6 @@ const LoginOauth2DeviceVerifyUserCode = lazy(
     () => import("./pages/LoginOauth2DeviceVerifyUserCode")
 );
 const LoginOauthGrant = lazy(() => import("./pages/LoginOauthGrant"));
-const TrustedDevice = lazy(() => import("./pages/TrustedDevice"));
 const LoginPassword = lazy(() => import("./pages/LoginPassword"));
 const WebauthnError = lazy(() => import("./pages/WebauthnError"));
 const Code = lazy(() => import("./pages/Code"));
@@ -254,14 +253,6 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                     case "login-password.ftl":
                         return (
                             <LoginPassword
-                                {...{ kcContext, i18n, classes }}
-                                Template={Template}
-                                doUseDefaultCss={false}
-                            />
-                        );
-                    case "trusted-device.ftl":
-                        return (
-                            <TrustedDevice
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={false}

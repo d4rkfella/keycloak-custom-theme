@@ -9,22 +9,8 @@ export type KcContextExtension = {
     // See: https://docs.keycloakify.dev/faq-and-help/some-values-you-need-are-missing-from-in-kccontext
 };
 
-export type KcContextExtensionPerPage = {
-    "trusted-device.ftl": {
-        trustedDeviceName: string;
-        auth: {
-            showUsername?: boolean;
-            attemptedUsername?: string;
-            showResetCredentials?: boolean;
-        };
-        url: {
-            loginAction: string;
-            loginRestartFlowUrl: string;
-        };
-    };
-};
 
 export type KcContext = ExtendKcContext<
     KcContextExtension,
-    KcContextExtensionPerPage
+    {}
 >;
