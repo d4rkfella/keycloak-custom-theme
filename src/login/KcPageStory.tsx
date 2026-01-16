@@ -11,20 +11,7 @@ const kcContextExtension: KcContextExtension = {
         ...kcEnvDefaults
     }
 };
-const kcContextExtensionPerPage: KcContextExtensionPerPage = {
-    "trusted-device.ftl": {
-        trustedDeviceName: "My Device",
-        auth: {
-            showUsername: true,
-            attemptedUsername: "user",
-            showResetCredentials: false
-        },
-        url: {
-            loginAction: "/login",
-            loginRestartFlowUrl: "/login"
-        }
-    }
-};
+const kcContextExtensionPerPage: KcContextExtensionPerPage = {};
 
 export const { getKcContextMock } = createGetKcContextMock({
     kcContextExtension,
