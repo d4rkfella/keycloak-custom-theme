@@ -1,16 +1,17 @@
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import Stack from "@mui/material/Stack";
 
 export default function SelectAuthenticator(props: PageProps<Extract<KcContext, { pageId: "select-authenticator.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
 
     const { url, auth } = kcContext;
-    const { kcClsx } = getKcClsx({ doUseDefaultCss, classes });
     const { msg, advancedMsg } = i18n;
 
     return (
@@ -22,8 +23,8 @@ export default function SelectAuthenticator(props: PageProps<Extract<KcContext, 
             displayInfo={false}
             headerNode={msg("loginChooseAuthenticator")}
         >
-            <Box component="form" id="kc-select-credential-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <Box className={kcClsx("kcSelectAuthListClass")}>
+            <Box component="form" id="kc-select-credential-form" action={url.loginAction} method="post">
+                <Stack spacing={2}>
                     {auth.authenticationSelections.map((authenticationSelection, i) => (
                         <Button
                             key={i}
@@ -32,16 +33,11 @@ export default function SelectAuthenticator(props: PageProps<Extract<KcContext, 
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "flex-start",
-                                mb: 2,
-                                p: 2,
+                                p: 1,
                                 border: "1px solid",
                                 borderColor: "divider",
                                 borderRadius: 1,
-                                textTransform: "none",
-                                backgroundColor: "background.paper",
-                                "&:hover": {
-                                    backgroundColor: "action.hover"
-                                }
+                                textTransform: "none"
                             }}
                             type="submit"
                             name="authenticationExecution"
@@ -54,27 +50,38 @@ export default function SelectAuthenticator(props: PageProps<Extract<KcContext, 
                                     justifyContent: "center",
                                     width: 48,
                                     height: 48,
+                                    flexShrink: 0,
                                     borderRadius: 1,
                                     backgroundColor: "action.selected",
-                                    mr: 2
+                                    mr: 1,
+                                    color: "primary.main"
                                 }}
                             >
-                                <i className={kcClsx("kcSelectAuthListItemIconPropertyClass", authenticationSelection.iconCssClass)} />
+                                <FormatListBulletedIcon fontSize="large" />
                             </Box>
-                            <Box sx={{ flexGrow: 1, textAlign: "left" }}>
+
+                            <Box sx={{ flexGrow: 1, textAlign: "left", minWidth: 0 }}>
                                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                                     {advancedMsg(authenticationSelection.displayName)}
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary">
+                                <Typography sx={{ whiteSpace: "normal", wordBreak: "break-word" }} variant="body2" color="text.secondary">
                                     {advancedMsg(authenticationSelection.helpText)}
                                 </Typography>
                             </Box>
-                            <Box sx={{ ml: 2 }}>
-                                <i className={kcClsx("kcSelectAuthListItemArrowIconClass")} />
+
+                            <Box
+                                sx={{
+                                    flexShrink: 0,
+                                    display: "flex",
+                                    alignItems: "center", // vertical center
+                                    justifyContent: "center" // optional: horizontal center if needed
+                                }}
+                            >
+                                <ArrowForwardIcon />
                             </Box>
                         </Button>
                     ))}
-                </Box>
+                </Stack>
             </Box>
         </Template>
     );

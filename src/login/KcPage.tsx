@@ -1,4 +1,6 @@
-import "./assets/fonts/roboto/main.css";
+import "@fontsource/orbitron";
+import "@fontsource/outfit";
+import "font-awesome/css/font-awesome.min.css";
 import { Suspense, lazy } from "react";
 import type { ClassKey } from "keycloakify/login";
 import type { KcContext } from "./KcContext";
@@ -6,9 +8,11 @@ import { useI18n } from "./i18n";
 import DefaultPage from "keycloakify/login/DefaultPage";
 import Template from "./Template";
 import { tss } from "tss-react/mui";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { theme } from "./theme";
+import { ThemeProvider } from "@mui/material/styles";
 import backgroundJpgUrl from "./assets/img/background.jpg";
-import UserProfileFormFields from "./UserProfileFormFields";
+const UserProfileFormFields = lazy(() => import("./UserProfileFormFields"));
+import CssBaseline from "@mui/material/CssBaseline";
 const Login = lazy(() => import("./pages/Login"));
 const LoginResetPassword = lazy(() => import("./pages/LoginResetPassword"));
 const LoginConfigTotp = lazy(() => import("./pages/LoginConfigTotp"));
@@ -31,54 +35,19 @@ const LoginOauth2DeviceVerifyUserCode = lazy(
     () => import("./pages/LoginOauth2DeviceVerifyUserCode")
 );
 const LoginOauthGrant = lazy(() => import("./pages/LoginOauthGrant"));
+const TrustedDevice = lazy(() => import("./pages/TrustedDevice"));
 const LoginPassword = lazy(() => import("./pages/LoginPassword"));
 const WebauthnError = lazy(() => import("./pages/WebauthnError"));
 const Code = lazy(() => import("./pages/Code"));
 const LoginRecoveryAuthnCodeConfig = lazy(
     () => import("./pages/LoginRecoveryAuthnCodeConfig")
 );
-
 const doMakeUserConfirmPassword = true;
-
-const theme = createTheme({
-    palette: {
-        mode: "dark",
-        text: {
-            primary: "#ffffffff",
-            secondary: "#A1A1A1"
-        }
-    },
-    typography: {
-        fontFamily: "Roboto"
-    },
-    components: {
-        MuiOutlinedInput: {
-            styleOverrides: {
-                root: {
-                    "& input:-webkit-autofill": {
-                        WebkitBoxShadow: "0 0 0 1000px rgba(255, 255, 255, 0.05) inset",
-                        WebkitBackgroundClip: "text"
-                    },
-                    "& input:-webkit-autofill:focus": {
-                        WebkitBoxShadow: "0 0 0 1000px rgba(255, 255, 255, 0.15) inset",
-                        WebkitBackgroundClip: "text"
-                    }
-                }
-            }
-        },
-        MuiInputLabel: {
-            styleOverrides: {
-                root: {
-                    color: "#ffffff"
-                }
-            }
-        }
-    }
-});
 
 export default function KcPage(props: { kcContext: KcContext }) {
     return (
         <ThemeProvider theme={theme}>
+            <CssBaseline />
             <KcPageContextualized {...props} />
         </ThemeProvider>
     );
@@ -107,7 +76,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <LoginResetPassword
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "login-config-totp.ftl":
@@ -123,7 +92,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <LoginOtp
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "login-verify-email.ftl":
@@ -131,7 +100,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <LoginVerifyEmail
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "select-authenticator.ftl":
@@ -139,7 +108,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <SelectAuthenticator
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "info.ftl":
@@ -155,7 +124,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <Error
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "terms.ftl":
@@ -163,7 +132,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <Terms
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "login-page-expired.ftl":
@@ -171,7 +140,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <LoginPageExpired
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "login-reset-otp.ftl":
@@ -179,7 +148,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <LoginResetOtp
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "frontchannel-logout.ftl":
@@ -187,7 +156,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <FrontchannelLogout
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "register.ftl":
@@ -195,7 +164,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <Register
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                                 UserProfileFormFields={UserProfileFormFields}
                                 doMakeUserConfirmPassword={doMakeUserConfirmPassword}
                             />
@@ -205,7 +174,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <LoginUpdateProfile
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                                 UserProfileFormFields={UserProfileFormFields}
                                 doMakeUserConfirmPassword={doMakeUserConfirmPassword}
                             />
@@ -215,7 +184,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <LoginUsername
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "webauthn-authenticate.ftl":
@@ -223,7 +192,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <WebauthnAuthenticate
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "webauthn-register.ftl":
@@ -231,7 +200,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <WebauthnRegister
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "login-update-password.ftl":
@@ -239,7 +208,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <LoginUpdatePassword
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "login-oauth2-device-verify-user-code.ftl":
@@ -247,7 +216,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <LoginOauth2DeviceVerifyUserCode
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "login-oauth-grant.ftl":
@@ -255,7 +224,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <LoginOauthGrant
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "webauthn-error.ftl":
@@ -263,7 +232,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <WebauthnError
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "code.ftl":
@@ -271,7 +240,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <Code
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "login-recovery-authn-code-config.ftl":
@@ -279,7 +248,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <LoginRecoveryAuthnCodeConfig
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                             />
                         );
                     case "login-password.ftl":
@@ -287,7 +256,15 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                             <LoginPassword
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
+                            />
+                        );
+                    case "trusted-device.ftl":
+                        return (
+                            <TrustedDevice
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={false}
                             />
                         );
                     default:
@@ -297,7 +274,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                                 i18n={i18n}
                                 classes={classes}
                                 Template={Template}
-                                doUseDefaultCss={true}
+                                doUseDefaultCss={false}
                                 UserProfileFormFields={UserProfileFormFields}
                                 doMakeUserConfirmPassword={doMakeUserConfirmPassword}
                             />

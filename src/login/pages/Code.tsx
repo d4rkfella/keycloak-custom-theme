@@ -2,14 +2,13 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
-
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import { Typography, TextField, Stack } from "@mui/material";
 
 export default function Code(props: PageProps<Extract<KcContext, { pageId: "code.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
+
     const { code } = kcContext;
+
     const { msg } = i18n;
 
     return (
@@ -18,29 +17,39 @@ export default function Code(props: PageProps<Extract<KcContext, { pageId: "code
             i18n={i18n}
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
-            headerNode={<Typography variant="h5">{code.success ? msg("codeSuccessTitle") : msg("codeErrorTitle", code.error)}</Typography>}
+            headerNode={code.success ? msg("codeSuccessTitle") : msg("codeErrorTitle", code.error)}
         >
-            <Box id="kc-code" sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+            <Stack spacing={2} id="kc-code">
                 {code.success ? (
                     <>
-                        <Typography>{msg("copyCodeInstruction")}</Typography>
+                        <Typography component="p" variant="body1">
+                            {msg("copyCodeInstruction")}
+                        </Typography>
+
                         <TextField
                             id="code"
-                            defaultValue={code.code}
-                            fullWidth
                             variant="outlined"
+                            fullWidth
+                            defaultValue={code.code}
                             slotProps={{
                                 input: {
                                     readOnly: true
                                 }
                             }}
-                            onFocus={e => e.target.select()}
                         />
                     </>
                 ) : (
-                    code.error && <Typography id="error" color="error" dangerouslySetInnerHTML={{ __html: kcSanitize(code.error) }} />
+                    code.error && (
+                        <Typography
+                            id="error"
+                            component="p"
+                            variant="body1"
+                            dangerouslySetInnerHTML={{ __html: kcSanitize(code.error) }}
+                            color="error"
+                        />
+                    )
                 )}
-            </Box>
+            </Stack>
         </Template>
     );
 }

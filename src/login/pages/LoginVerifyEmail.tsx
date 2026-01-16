@@ -19,7 +19,7 @@ export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { p
             displayInfo
             headerNode={msg("emailVerifyTitle")}
             infoNode={
-                <Typography className="instruction" sx={{ mt: 2 }} variant="body2">
+                <Typography sx={{ textAlign: "center" }} variant="body2">
                     {msg("emailVerifyInstruction2")}
                     <br />
                     <Link href={url.loginAction}>{msg("doClickHere")}</Link>
@@ -28,9 +28,7 @@ export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { p
                 </Typography>
             }
         >
-            <Typography className="instruction" variant="body1">
-                {msg("emailVerifyInstruction1", user?.email ?? "")}
-            </Typography>
+            <Typography variant="body1">{msg("emailVerifyInstruction1", user?.email ?? "")}</Typography>
         </Template>
     );
 }

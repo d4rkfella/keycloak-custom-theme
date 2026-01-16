@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import Stack from "@mui/material/Stack";
 
 export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pageId: "login-config-totp.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -34,91 +35,138 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
             headerNode={msg("loginTotpTitle")}
             displayMessage={!messagesPerField.existsError("totp", "userLabel")}
         >
-            <>
-                <List id="kc-totp-settings" component="ol" sx={{ pl: 3, mb: 1 }}>
-                    <ListItem component="li" sx={{ display: "list-item", listStyleType: "decimal", pl: 1 }}>
-                        <Typography variant="body1">{msg("loginTotpStep1")}</Typography>
+            <Stack spacing={3}>
+                {/* Instructions list */}
+                <List id="kc-totp-settings" component="ol" sx={{ pl: 2.5 }}>
+                    {/* Step 1: Install app */}
+                    <ListItem
+                        disablePadding
+                        disableGutters
+                        sx={{
+                            display: "list-item",
+                            listStyleType: "decimal",
+                            mb: 2.5
+                        }}
+                    >
+                        <Stack spacing={1.5}>
+                            <Typography>{msg("loginTotpStep1")}</Typography>
 
-                        <List id="kc-totp-supported-apps" component="ul" sx={{ pl: 3 }}>
-                            {totp.supportedApplications.map(app => (
-                                <ListItem key={app} component="li" sx={{ display: "list-item", listStyleType: "disc", pl: 0 }}>
-                                    <Typography variant="body2">{advancedMsg(app)}</Typography>
-                                </ListItem>
-                            ))}
-                        </List>
+                            {/* Nested app list */}
+                            <List component="ul" id="kc-totp-supported-apps" dense disablePadding>
+                                {totp.supportedApplications.map(app => (
+                                    <ListItem key={app} disablePadding disableGutters>
+                                        <Typography>{advancedMsg(app)}</Typography>
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </Stack>
                     </ListItem>
 
-                    {mode == "manual" ? (
+                    {/* Step 2 & 3: Manual or QR mode */}
+                    {mode === "manual" ? (
                         <>
-                            <ListItem component="li" sx={{ display: "list-item", listStyleType: "decimal", pl: 1 }}>
-                                <Typography variant="body1" sx={{ mb: 1 }}>
-                                    {msg("loginTotpManualStep2")}
-                                </Typography>
-                                <Typography variant="body1" sx={{ mb: 1 }}>
-                                    <Box component="span" id="kc-totp-secret-key" sx={{ fontFamily: "monospace", fontWeight: "bold" }}>
+                            {/* Manual Step 2: Enter key */}
+                            <ListItem
+                                disablePadding
+                                disableGutters
+                                sx={{
+                                    display: "list-item",
+                                    listStyleType: "decimal",
+                                    mb: 2.5
+                                }}
+                            >
+                                <Typography>{msg("loginTotpManualStep2")}</Typography>
+                                <Stack mt={1.5} spacing={1}>
+                                    <Typography
+                                        id="kc-totp-secret-key"
+                                        sx={{
+                                            fontWeight: "bold",
+                                            fontFamily: "monospace",
+                                            letterSpacing: "0.05em"
+                                        }}
+                                    >
                                         {totp.totpSecretEncoded}
-                                    </Box>
-                                </Typography>
-                                <Typography variant="body1" sx={{ mb: 1 }}>
-                                    <Link href={totp.qrUrl} id="mode-barcode" underline="hover">
-                                        {msg("loginTotpScanBarcode")}
-                                    </Link>
-                                </Typography>
+                                    </Typography>
+
+                                    <Typography variant="body2">
+                                        <Link href={totp.qrUrl} id="mode-barcode" underline="hover">
+                                            {msg("loginTotpScanBarcode")}
+                                        </Link>
+                                    </Typography>
+                                </Stack>
                             </ListItem>
-                            <ListItem component="li" sx={{ display: "list-item", listStyleType: "decimal", pl: 1 }}>
-                                <Typography variant="body1" sx={{ mb: 1 }}>
-                                    {msg("loginTotpManualStep3")}
-                                </Typography>
-                                <List component="ul" sx={{ pl: 3 }}>
-                                    <ListItem component="li" id="kc-totp-type" sx={{ display: "list-item", listStyleType: "disc", pl: 0 }}>
-                                        <Typography variant="body2">
-                                            {msg("loginTotpType")}: {msg(`loginTotp.${totp.policy.type}`)}
-                                        </Typography>
-                                    </ListItem>
-                                    <ListItem component="li" id="kc-totp-algorithm" sx={{ display: "list-item", listStyleType: "disc", pl: 0 }}>
-                                        <Typography variant="body2">
-                                            {msg("loginTotpAlgorithm")}: {totp.policy.getAlgorithmKey()}
-                                        </Typography>
-                                    </ListItem>
-                                    <ListItem component="li" id="kc-totp-digits" sx={{ display: "list-item", listStyleType: "disc", pl: 0 }}>
-                                        <Typography variant="body2">
-                                            {msg("loginTotpDigits")}: {totp.policy.digits}
-                                        </Typography>
-                                    </ListItem>
-                                    {totp.policy.type === "totp" ? (
-                                        <ListItem component="li" id="kc-totp-period" sx={{ display: "list-item", listStyleType: "disc", pl: 0 }}>
-                                            <Typography variant="body2">
-                                                {msg("loginTotpInterval")}: {totp.policy.period}
+
+                            {/* Manual Step 3: Configuration values */}
+                            <ListItem
+                                disablePadding
+                                disableGutters
+                                sx={{
+                                    display: "list-item",
+                                    listStyleType: "decimal",
+                                    mb: 2.5
+                                }}
+                            >
+                                <Stack spacing={1.5}>
+                                    <Typography>{msg("loginTotpManualStep3")}</Typography>
+
+                                    {/* Nested config list */}
+                                    <List component="ul" dense disablePadding>
+                                        <ListItem disablePadding disableGutters id="kc-totp-type">
+                                            <Typography>
+                                                {msg("loginTotpType")}: {msg(`loginTotp.${totp.policy.type}`)}
                                             </Typography>
                                         </ListItem>
-                                    ) : (
-                                        <ListItem component="li" id="kc-totp-counter" sx={{ display: "list-item", listStyleType: "disc", pl: 0 }}>
-                                            <Typography variant="body2">
-                                                {msg("loginTotpCounter")}: {totp.policy.initialCounter}
+
+                                        <ListItem disablePadding disableGutters id="kc-totp-algorithm">
+                                            <Typography>
+                                                {msg("loginTotpAlgorithm")}: {totp.policy.getAlgorithmKey()}
                                             </Typography>
                                         </ListItem>
-                                    )}
-                                </List>
+
+                                        <ListItem disablePadding disableGutters id="kc-totp-digits">
+                                            <Typography>
+                                                {msg("loginTotpDigits")}: {totp.policy.digits}
+                                            </Typography>
+                                        </ListItem>
+
+                                        {totp.policy.type === "totp" ? (
+                                            <ListItem disablePadding disableGutters id="kc-totp-period">
+                                                <Typography>
+                                                    {msg("loginTotpInterval")}: {totp.policy.period}
+                                                </Typography>
+                                            </ListItem>
+                                        ) : (
+                                            <ListItem disablePadding disableGutters id="kc-totp-counter">
+                                                <Typography>
+                                                    {msg("loginTotpCounter")}: {totp.policy.initialCounter}
+                                                </Typography>
+                                            </ListItem>
+                                        )}
+                                    </List>
+                                </Stack>
                             </ListItem>
                         </>
                     ) : (
-                        <ListItem component="li" sx={{ display: "list-item", listStyleType: "decimal", pl: 1 }}>
-                            <Typography variant="body1" sx={{ mb: 2 }}>
-                                {msg("loginTotpStep2")}
-                            </Typography>
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "flex-start",
-                                    mb: 1
-                                }}
-                            >
+                        /* QR Code mode - Step 2: Scan barcode */
+                        <ListItem
+                            disablePadding
+                            disableGutters
+                            sx={{
+                                display: "list-item",
+                                listStyleType: "decimal",
+                                mb: 2.5
+                            }}
+                        >
+                            <Stack spacing={1.5}>
+                                <Typography>{msg("loginTotpStep2")}</Typography>
+
                                 <Box
                                     component="img"
                                     id="kc-totp-secret-qr-code"
                                     src={`data:image/png;base64, ${totp.totpSecretQrCode}`}
                                     alt="Figure: Barcode"
                                     sx={{
+                                        display: "block",
                                         maxWidth: "100%",
                                         width: "150px",
                                         height: "auto",
@@ -127,29 +175,36 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                                         borderRadius: 1
                                     }}
                                 />
-                            </Box>
-                            <Typography variant="body2">
-                                <Link href={totp.manualUrl} id="mode-manual" underline="hover">
-                                    {msg("loginTotpUnableToScan")}
-                                </Link>
-                            </Typography>
+
+                                <Typography>
+                                    <Link href={totp.manualUrl} id="mode-manual" underline="hover">
+                                        {msg("loginTotpUnableToScan")}
+                                    </Link>
+                                </Typography>
+                            </Stack>
                         </ListItem>
                     )}
-                    <ListItem component="li" sx={{ display: "list-item", listStyleType: "decimal", pl: 1 }}>
-                        <Typography variant="body1" sx={{ mb: 1 }}>
-                            {msg("loginTotpStep3")}
-                        </Typography>
-                        <Typography variant="body2">{msg("loginTotpStep3DeviceName")}</Typography>
+
+                    {/* Final step: Enter code */}
+                    <ListItem
+                        disablePadding
+                        disableGutters
+                        sx={{
+                            display: "list-item",
+                            listStyleType: "decimal"
+                        }}
+                    >
+                        <Stack spacing={2}>
+                            <Typography>{msg("loginTotpStep3")}</Typography>
+                            <Typography color="text.secondary">{msg("loginTotpStep3DeviceName")}</Typography>
+                        </Stack>
                     </ListItem>
                 </List>
 
-                <Box component="form" action={url.loginAction} id="kc-totp-settings-form" method="post">
-                    <Box sx={{ mb: 2 }}>
+                {/* Form section */}
+                <Stack spacing={2.5} component="form" action={url.loginAction} id="kc-totp-settings-form" method="post">
+                    <Stack spacing={2}>
                         <TextField
-                            sx={{
-                                width: "100%",
-                                minWidth: 350
-                            }}
                             variant="outlined"
                             type="text"
                             id="totp"
@@ -172,14 +227,8 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                         />
                         <input type="hidden" id="totpSecret" name="totpSecret" value={totp.totpSecret} />
                         {mode && <input type="hidden" id="mode" value={mode} />}
-                    </Box>
 
-                    <Box sx={{ mb: 2 }}>
                         <TextField
-                            sx={{
-                                width: "100%",
-                                minWidth: 350
-                            }}
                             variant="outlined"
                             type="text"
                             id="userLabel"
@@ -200,42 +249,38 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                                 )
                             }
                         />
-                    </Box>
-
-                    <Box>
                         <LogoutOtherSessions kcClsx={kcClsx} i18n={i18n} />
-                    </Box>
-
+                    </Stack>
                     {isAppInitiatedAction ? (
-                        <>
-                            <Button sx={{ width: "100%", mb: 1 }} variant="contained" type="submit" id="saveTOTPBtn">
+                        <Stack spacing={2}>
+                            <Button variant="contained" type="submit" id="saveTOTPBtn">
                                 {msg("doSubmit")}
                             </Button>
-                            <Button sx={{ width: "100%" }} variant="outlined" type="submit" id="cancelTOTPBtn" name="cancel-aia" value="true">
+                            <Button variant="outlined" type="submit" id="cancelTOTPBtn" name="cancel-aia" value="true">
                                 {msg("doCancel")}
                             </Button>
-                        </>
+                        </Stack>
                     ) : (
-                        <Button size="large" sx={{ width: "100%" }} variant="contained" type="submit" id="saveTOTPBtn">
+                        <Button variant="contained" type="submit" id="saveTOTPBtn">
                             {msg("doSubmit")}
                         </Button>
                     )}
-                </Box>
-            </>
+                </Stack>
+            </Stack>
         </Template>
     );
 }
 
 function LogoutOtherSessions(props: { kcClsx: KcClsx; i18n: I18n }) {
     const { i18n } = props;
-
     const { msg } = i18n;
 
     return (
-        <FormControlLabel
-            sx={{ mb: 2 }}
-            control={<Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked={true} />}
-            label={msg("logoutOtherSessions")}
-        />
+        <Box>
+            <FormControlLabel
+                control={<Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked={true} />}
+                label={msg("logoutOtherSessions")}
+            />
+        </Box>
     );
 }

@@ -2,14 +2,13 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
-import Box from "@mui/material/Box";
+import { Stack, Typography, Link } from "@mui/material";
 
 export default function Info(props: PageProps<Extract<KcContext, { pageId: "info.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
 
     const { advancedMsgStr, msg } = i18n;
+
     const { messageHeader, message, requiredActions, skipLink, pageRedirectUri, actionUri, client } = kcContext;
 
     return (
@@ -22,55 +21,61 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
             headerNode={
                 <span
                     dangerouslySetInnerHTML={{
-                        __html: kcSanitize(messageHeader ?? message.summary)
+                        __html: kcSanitize(messageHeader ? advancedMsgStr(messageHeader) : message.summary)
                     }}
                 />
             }
         >
-            <Box id="kc-info-message">
+            <Stack spacing={2.5} id="kc-info-message">
                 <Typography
-                    variant="body1"
+                    component="p"
                     dangerouslySetInnerHTML={{
                         __html: kcSanitize(
                             (() => {
                                 let html = message.summary?.trim();
+
                                 if (requiredActions) {
                                     html += " <b>";
                                     html += requiredActions.map(requiredAction => advancedMsgStr(`requiredAction.${requiredAction}`)).join(", ");
                                     html += "</b>";
                                 }
+
                                 return html;
                             })()
                         )
                     }}
                 />
+
                 {(() => {
                     if (skipLink) {
                         return null;
                     }
+
                     if (pageRedirectUri) {
                         return (
-                            <Typography variant="body2">
-                                <Link href={pageRedirectUri}>{msg("proceedWithAction")}</Link>
+                            <Typography component="p">
+                                <Link href={pageRedirectUri}>{msg("backToApplication")}</Link>
                             </Typography>
                         );
                     }
+
                     if (actionUri) {
                         return (
-                            <Typography variant="body2">
+                            <Typography component="p">
                                 <Link href={actionUri}>{msg("proceedWithAction")}</Link>
                             </Typography>
                         );
                     }
+
                     if (client.baseUrl) {
                         return (
-                            <Typography variant="body2">
+                            <Typography component="p">
                                 <Link href={client.baseUrl}>{msg("backToApplication")}</Link>
                             </Typography>
                         );
                     }
                 })()}
-            </Box>
+            </Stack>
         </Template>
     );
 }

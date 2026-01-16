@@ -1,29 +1,21 @@
 import { useState } from "react";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
 export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, { pageId: "login-update-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-
-    const { kcClsx } = getKcClsx({
-        doUseDefaultCss,
-        classes
-    });
 
     const { msg } = i18n;
 
@@ -41,122 +33,117 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
             displayMessage={!messagesPerField.existsError("password", "password-confirm")}
             headerNode={msg("updatePasswordTitle")}
         >
-            <Box component="form" id="kc-passwd-update-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <Box className={kcClsx("kcFormGroupClass")}>
-                    <Box className={kcClsx("kcInputWrapperClass")}>
-                        <FormControl sx={{ width: "100%", minWidth: 350, mb: 2 }} variant="outlined">
-                            <InputLabel htmlFor="password-new">{msg("passwordNew")}</InputLabel>
-                            <OutlinedInput
-                                id="password-new"
-                                name="password-new"
-                                type={showPasswordNew ? "text" : "password"}
-                                autoFocus
-                                autoComplete="new-password"
-                                error={messagesPerField.existsError("password", "password-confirm")}
-                                endAdornment={
+            <Stack spacing={2.5} component="form" id="kc-passwd-update-form" action={url.loginAction} method="post">
+                <Stack spacing={2}>
+                    <TextField
+                        sx={{ width: "100%" }}
+                        variant="outlined"
+                        id="password-new"
+                        name="password-new"
+                        label={msg("passwordNew")}
+                        type={showPasswordNew ? "text" : "password"}
+                        autoFocus
+                        autoComplete="new-password"
+                        error={messagesPerField.existsError("password", "password-confirm")}
+                        helperText={
+                            messagesPerField.existsError("password") && (
+                                <span
+                                    id="input-error-password"
+                                    aria-live="polite"
+                                    dangerouslySetInnerHTML={{
+                                        __html: kcSanitize(messagesPerField.get("password"))
+                                    }}
+                                />
+                            )
+                        }
+                        slotProps={{
+                            input: {
+                                endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label={showPasswordNew ? "hide the password" : "display the password"}
-                                            onClick={() => setShowPasswordNew(!showPasswordNew)}
-                                            onMouseDown={e => e.preventDefault()}
-                                            onMouseUp={e => e.preventDefault()}
+                                            onClick={() => setShowPasswordNew(show => !show)}
+                                            onMouseDown={event => event.preventDefault()}
+                                            onMouseUp={event => event.preventDefault()}
                                             edge="end"
                                         >
                                             {showPasswordNew ? <VisibilityOff /> : <Visibility />}
                                         </IconButton>
                                     </InputAdornment>
-                                }
-                                label={msg("passwordNew")}
-                            />
-                            {messagesPerField.existsError("password") && (
-                                <FormHelperText error>
-                                    <span
-                                        id="input-error-password"
-                                        aria-live="polite"
-                                        dangerouslySetInnerHTML={{
-                                            __html: kcSanitize(messagesPerField.get("password"))
-                                        }}
-                                    />
-                                </FormHelperText>
-                            )}
-                        </FormControl>
-                    </Box>
-                </Box>
+                                )
+                            }
+                        }}
+                    />
 
-                <Box className={kcClsx("kcFormGroupClass")}>
-                    <Box className={kcClsx("kcInputWrapperClass")}>
-                        <FormControl sx={{ width: "100%", minWidth: 350, mb: 2 }} variant="outlined">
-                            <InputLabel htmlFor="password-confirm">{msg("passwordConfirm")}</InputLabel>
-                            <OutlinedInput
-                                id="password-confirm"
-                                name="password-confirm"
-                                type={showPasswordConfirm ? "text" : "password"}
-                                autoComplete="new-password"
-                                error={messagesPerField.existsError("password", "password-confirm")}
-                                endAdornment={
+                    <TextField
+                        sx={{ width: "100%" }}
+                        variant="outlined"
+                        id="password-confirm"
+                        name="password-confirm"
+                        label={msg("passwordConfirm")}
+                        type={showPasswordConfirm ? "text" : "password"}
+                        autoComplete="new-password"
+                        error={messagesPerField.existsError("password", "password-confirm")}
+                        helperText={
+                            messagesPerField.existsError("password-confirm") && (
+                                <span
+                                    id="input-error-password-confirm"
+                                    aria-live="polite"
+                                    dangerouslySetInnerHTML={{
+                                        __html: kcSanitize(messagesPerField.get("password-confirm"))
+                                    }}
+                                />
+                            )
+                        }
+                        slotProps={{
+                            input: {
+                                endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label={showPasswordConfirm ? "hide the password" : "display the password"}
-                                            onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}
-                                            onMouseDown={e => e.preventDefault()}
-                                            onMouseUp={e => e.preventDefault()}
+                                            onClick={() => setShowPasswordConfirm(show => !show)}
+                                            onMouseDown={event => event.preventDefault()}
+                                            onMouseUp={event => event.preventDefault()}
                                             edge="end"
                                         >
                                             {showPasswordConfirm ? <VisibilityOff /> : <Visibility />}
                                         </IconButton>
                                     </InputAdornment>
-                                }
-                                label={msg("passwordConfirm")}
-                            />
-                            {messagesPerField.existsError("password-confirm") && (
-                                <FormHelperText error>
-                                    <span
-                                        id="input-error-password-confirm"
-                                        aria-live="polite"
-                                        dangerouslySetInnerHTML={{
-                                            __html: kcSanitize(messagesPerField.get("password-confirm"))
-                                        }}
-                                    />
-                                </FormHelperText>
-                            )}
-                        </FormControl>
-                    </Box>
-                </Box>
-
-                <Box className={kcClsx("kcFormGroupClass")}>
-                    <Box className={kcClsx("kcInputWrapperClass")}>
-                        <LogoutOtherSessions i18n={i18n} />
-                    </Box>
-                    <Box id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                        {isAppInitiatedAction ? (
-                            <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
-                                <Button sx={{ flex: 1 }} variant="contained" type="submit">
-                                    {msg("doSubmit")}
-                                </Button>
-                                <Button sx={{ flex: 1 }} variant="outlined" type="submit" name="cancel-aia" value="true">
-                                    {msg("doCancel")}
-                                </Button>
-                            </Box>
-                        ) : (
-                            <Button sx={{ width: "100%" }} variant="contained" type="submit">
+                                )
+                            }
+                        }}
+                    />
+                    <LogoutOtherSessions i18n={i18n} />
+                </Stack>
+                <Stack id="kc-form-buttons" spacing={2}>
+                    {isAppInitiatedAction ? (
+                        <>
+                            <Button variant="contained" type="submit">
                                 {msg("doSubmit")}
                             </Button>
-                        )}
-                    </Box>
-                </Box>
-            </Box>
+                            <Button variant="outlined" type="submit" name="cancel-aia" value="true">
+                                {msg("doCancel")}
+                            </Button>
+                        </>
+                    ) : (
+                        <Button variant="contained" type="submit">
+                            {msg("doSubmit")}
+                        </Button>
+                    )}
+                </Stack>
+            </Stack>
         </Template>
     );
 }
 
 function LogoutOtherSessions(props: { i18n: I18n }) {
     const { msg } = props.i18n;
-
     return (
-        <FormControlLabel
-            sx={{ width: "100%" }}
-            control={<Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked />}
-            label={msg("logoutOtherSessions")}
-        />
+        <Box>
+            <FormControlLabel
+                control={<Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked />}
+                label={msg("logoutOtherSessions")}
+            />
+        </Box>
     );
 }

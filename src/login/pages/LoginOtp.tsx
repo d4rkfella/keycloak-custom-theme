@@ -1,26 +1,14 @@
 import { useState } from "react";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Radio from "@mui/material/Radio";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import { Button, TextField, Radio, Box, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import KeyIcon from "@mui/icons-material/Key";
 
 export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "login-otp.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-
-    const { kcClsx } = getKcClsx({
-        doUseDefaultCss,
-        classes
-    });
-
     const { otpLogin, url, messagesPerField } = kcContext;
-
     const { msg } = i18n;
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,9 +23,10 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
             displayMessage={!messagesPerField.existsError("totp")}
             headerNode={msg("doLogIn")}
         >
-            <form
+            <Stack
+                spacing={3}
+                component="form"
                 id="kc-otp-login-form"
-                className={kcClsx("kcFormClass")}
                 action={url.loginAction}
                 onSubmit={() => {
                     setIsSubmitting(true);
@@ -46,109 +35,49 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                 method="post"
             >
                 {otpLogin.userOtpCredentials.length > 1 && (
-                    <Box className={kcClsx("kcFormGroupClass")}>
-                        <Box className={kcClsx("kcInputWrapperClass")}>
-                            {otpLogin.userOtpCredentials.map((otpCredential, index) => (
-                                <FormControlLabel
-                                    key={index}
-                                    sx={{
-                                        width: "100%",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        mb: 1,
-                                        ml: 0,
-                                        mr: 0,
-                                        border: "1px solid",
-                                        borderColor: "divider",
-                                        borderRadius: 1,
-                                        p: 1,
-                                        cursor: "pointer",
-                                        "&:hover": {
-                                            backgroundColor: "action.hover"
-                                        }
-                                    }}
-                                    control={
-                                        <Radio
-                                            id={`kc-otp-credential-${index}`}
-                                            name="selectedCredentialId"
-                                            value={otpCredential.id}
-                                            checked={selectedCredentialId === otpCredential.id}
-                                            onChange={e => setSelectedCredentialId(e.target.value)}
-                                        />
-                                    }
-                                    label={
-                                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                                            <Box
-                                                sx={{
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    justifyContent: "center",
-                                                    width: 40,
-                                                    height: 40,
-                                                    borderRadius: 1,
-                                                    backgroundColor: "action.selected"
-                                                }}
-                                            >
-                                                <i className={kcClsx("kcLoginOTPListItemIconClass")} aria-hidden="true"></i>
-                                            </Box>
-                                            <Typography variant="body2">{otpCredential.userLabel}</Typography>
-                                        </Box>
-                                    }
-                                />
-                            ))}
-                        </Box>
-                    </Box>
+                    <List disablePadding>
+                        {otpLogin.userOtpCredentials.map(otpCredential => (
+                            <ListItem disableGutters key={otpCredential.id}>
+                                <ListItemButton
+                                    selected={selectedCredentialId === otpCredential.id}
+                                    onClick={() => setSelectedCredentialId(otpCredential.id)}
+                                >
+                                    <ListItemIcon>
+                                        <KeyIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={otpCredential.userLabel} />
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
+                    </List>
                 )}
 
-                <Box className={kcClsx("kcFormGroupClass")}>
-                    <Box className={kcClsx("kcInputWrapperClass")}>
-                        <TextField
-                            sx={{
-                                width: "100%",
-                                minWidth: 350,
-                                mt: 3
-                            }}
-                            label={msg("loginOtpOneTime")}
-                            variant="outlined"
-                            id="otp"
-                            name="otp"
-                            autoComplete="off"
-                            type="text"
-                            autoFocus
-                            error={messagesPerField.existsError("totp")}
-                        />
-                        {messagesPerField.existsError("totp") && (
-                            <span
+                <TextField
+                    label={msg("loginOtpOneTime")}
+                    id="otp"
+                    name="otp"
+                    autoComplete="off"
+                    type="text"
+                    autoFocus
+                    error={messagesPerField.existsError("totp")}
+                    helperText={
+                        messagesPerField.existsError("totp") && (
+                            <Box
+                                component="span"
                                 id="input-error-otp-code"
-                                className={kcClsx("kcInputErrorMessageClass")}
                                 aria-live="polite"
                                 dangerouslySetInnerHTML={{
                                     __html: kcSanitize(messagesPerField.get("totp"))
                                 }}
                             />
-                        )}
-                    </Box>
-                </Box>
+                        )
+                    }
+                />
 
-                <Box className={kcClsx("kcFormGroupClass")}>
-                    <Box id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
-                        <Box className={kcClsx("kcFormOptionsWrapperClass")}></Box>
-                    </Box>
-                    <Box id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                        <Button
-                            sx={{ width: "100%" }}
-                            variant="contained"
-                            name="login"
-                            id="kc-login"
-                            type="submit"
-                            disabled={isSubmitting}
-                            size="large"
-                        >
-                            {msg("doLogIn")}
-                        </Button>
-                    </Box>
-                </Box>
-            </form>
+                <Button variant="contained" name="login" id="kc-login" type="submit" loading={isSubmitting}>
+                    {msg("doLogIn")}
+                </Button>
+            </Stack>
         </Template>
     );
 }
