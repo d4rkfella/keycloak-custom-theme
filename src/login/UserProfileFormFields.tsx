@@ -248,7 +248,7 @@ function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefine
                 type={
                     attribute.annotations.inputType?.startsWith("html5-")
                         ? attribute.annotations.inputType.slice(6)
-                        : attribute.annotations.inputType ?? "text"
+                        : (attribute.annotations.inputType ?? "text")
                 }
                 id={attribute.name}
                 name={attribute.name}

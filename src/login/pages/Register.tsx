@@ -114,7 +114,7 @@ function TermsAcceptance(props: {
     onAreTermsAcceptedValueChange: (areTermsAccepted: boolean) => void;
     theme: Theme;
 }) {
-    const { i18n, messagesPerField, areTermsAccepted, onAreTermsAcceptedValueChange, theme } = props;
+    const { i18n, messagesPerField, areTermsAccepted, onAreTermsAcceptedValueChange } = props;
     const { msg, msgStr } = i18n;
 
     const openTermsInNewTab = () => {
