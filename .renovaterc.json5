@@ -1,0 +1,37 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "packageRules": [
+    {
+      "matchPackageNames": ["keycloakify"],
+      "groupName": "keycloakify core",
+      "automerge": false,
+      "minimumReleaseAge": "7 days",
+      "labels": ["keycloakify"]
+    },
+    {
+      "matchPackageNames": ["react", "react-dom", "@types/react"],
+      "groupName": "react",
+      "automerge": false
+    },
+    {
+      "matchPackageNames": ["vite", "@vitejs/*"],
+      "groupName": "vite",
+      "automerge": true,
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["major-update", "needs-review"]
+    }
+  ],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2
+}
