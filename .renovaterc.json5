@@ -32,6 +32,4 @@
       "labels": ["major-update", "needs-review"]
     }
   ],
-  "prConcurrentLimit": 5,
-  "prHourlyLimit": 2
 }
