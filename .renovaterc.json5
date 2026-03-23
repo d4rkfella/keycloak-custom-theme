@@ -7,7 +7,6 @@
       "matchPackageNames": ["keycloakify"],
       "groupName": "keycloakify core",
       "automerge": false,
-      "minimumReleaseAge": "7 days",
       "labels": ["keycloakify"]
     },
     {
