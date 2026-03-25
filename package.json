@@ -41,7 +41,7 @@
         "@types/react-dom": "^18.3.7",
         "@typescript-eslint/eslint-plugin": "^8.57.2",
         "@typescript-eslint/parser": "^8.57.2",
-        "@vitejs/plugin-react": "^4.2.1",
+        "@vitejs/plugin-react": "^4.7.0",
         "@vitest/browser-playwright": "^4.1.1",
         "@vitest/coverage-v8": "^4.1.1",
         "eslint": "^9.39.4",
@@ -56,7 +56,7 @@
         "storybook": "^10.3.3",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.57.2",
-        "vite": "^5.0.8",
+        "vite": "^5.4.21",
         "vitest": "^4.1.1"
     },
     "engines": {
