@@ -30,7 +30,7 @@
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "react-icons": "^5.6.0",
-        "tss-react": "^4.9.20"
+        "tss-react": "^4.9.21"
     },
     "devDependencies": {
         "@eslint/js": "^9.39.4",
