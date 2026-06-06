@@ -8,7 +8,9 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 
-import { Link, Box, Button, Checkbox, FormControlLabel, Stack, Typography, useTheme, Theme } from "@mui/material";
+import { Link, Box, Button, Checkbox, FormControlLabel, Stack, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import type { Theme } from "@mui/material/styles";
 
 type RegisterProps = PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I18n> & {
     UserProfileFormFields: LazyOrNot<(props: UserProfileFormFieldsProps) => JSX.Element>;
@@ -164,7 +166,7 @@ function TermsAcceptance(props: {
                     id="termsAccepted"
                     name="termsAccepted"
                     checked={areTermsAccepted}
-                    onChange={e => onAreTermsAcceptedValueChange(e.target.checked)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => onAreTermsAcceptedValueChange(e.target.checked)}
                     sx={{}}
                 />
             }

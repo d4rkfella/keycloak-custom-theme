@@ -74,8 +74,8 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
                                             <IconButton
                                                 aria-label={showPassword ? "hide the password" : "display the password"}
                                                 onClick={() => setShowPassword(show => !show)}
-                                                onMouseDown={event => event.preventDefault()}
-                                                onMouseUp={event => event.preventDefault()}
+                                                onMouseDown={(event: React.MouseEvent) => event.preventDefault()}
+                                                onMouseUp={(event: React.MouseEvent) => event.preventDefault()}
                                                 edge="end"
                                                 tabIndex={-1}
                                             >

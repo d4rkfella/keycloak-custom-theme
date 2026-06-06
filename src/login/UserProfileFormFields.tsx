@@ -26,9 +26,9 @@ import {
     MenuItem,
     Stack,
     TextField,
-    Typography,
-    useTheme
+    Typography
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
@@ -196,7 +196,7 @@ function PasswordInputTag(props: InputFieldByTypeProps & { fieldIndex: number | 
             error={displayableErrors.length !== 0}
             disabled={attribute.readOnly}
             autoComplete={attribute.autocomplete}
-            onChange={event => dispatchFormAction({ action: "update", name: attribute.name, valueOrValues: event.target.value })}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatchFormAction({ action: "update", name: attribute.name, valueOrValues: event.target.value })}
             onBlur={() => dispatchFormAction({ action: "focus lost", name: attribute.name, fieldIndex: undefined })}
             helperText={
                 displayableErrors.length > 0 && (
@@ -217,8 +217,8 @@ function PasswordInputTag(props: InputFieldByTypeProps & { fieldIndex: number | 
                             <IconButton
                                 aria-label={showPassword ? msgStr("hidePassword") : msgStr("showPassword")}
                                 onClick={() => setShowPassword(show => !show)}
-                                onMouseDown={event => event.preventDefault()}
-                                onMouseUp={event => event.preventDefault()}
+                                onMouseDown={(event: React.MouseEvent) => event.preventDefault()}
+                                onMouseUp={(event: React.MouseEvent) => event.preventDefault()}
                                 edge="end"
                             >
                                 {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -271,7 +271,7 @@ function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefine
                         ...Object.fromEntries(Object.entries(attribute.html5DataAnnotations ?? {}).map(([key, value]) => [`data-${key}`, value]))
                     }
                 }}
-                onChange={event => {
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     const newValue =
                         fieldIndex !== undefined && Array.isArray(valueOrValues)
                             ? valueOrValues.map((v, i) => (i === fieldIndex ? event.target.value : v))
@@ -368,7 +368,7 @@ function TextareaTag(props: InputFieldByTypeProps) {
                 }
             }}
             value={valueOrValues}
-            onChange={event => dispatchFormAction({ action: "update", name: attribute.name, valueOrValues: event.target.value })}
+            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => dispatchFormAction({ action: "update", name: attribute.name, valueOrValues: event.target.value })}
             onBlur={() => dispatchFormAction({ action: "focus lost", name: attribute.name, fieldIndex: undefined })}
             helperText={
                 displayableErrors.length > 0 ? displayableErrors.map((e, i, arr) => (
@@ -409,7 +409,7 @@ function SelectTag(props: InputFieldByTypeProps) {
                 value={valueOrValues}
                 required={attribute.required}
                 disabled={attribute.readOnly}
-                onChange={event => dispatchFormAction({ action: "update", name: attribute.name, valueOrValues: event.target.value })}
+                onChange={(event: any) => dispatchFormAction({ action: "update", name: attribute.name, valueOrValues: event.target.value })}
                 onBlur={() => dispatchFormAction({ action: "focus lost", name: attribute.name, fieldIndex: undefined })}
                 label={advancedMsgStr(attribute.displayName ?? "")}
             >
@@ -454,7 +454,7 @@ function InputTagSelects(props: InputFieldByTypeProps) {
             <RadioGroup
                 name={attribute.name}
                 value={typeof valueOrValues === "string" ? valueOrValues : ""}
-                onChange={event => dispatchFormAction({ action: "update", name: attribute.name, valueOrValues: event.target.value })}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatchFormAction({ action: "update", name: attribute.name, valueOrValues: event.target.value })}
             >
                 {options.map(option => (
                     <FormControlLabel
@@ -480,7 +480,7 @@ function InputTagSelects(props: InputFieldByTypeProps) {
                             value={option}
                             disabled={attribute.readOnly}
                             checked={Array.isArray(valueOrValues) ? valueOrValues.includes(option) : valueOrValues === option}
-                            onChange={event => {
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                 const isChecked = event.target.checked;
                                 const newValue = Array.isArray(valueOrValues)
                                     ? isChecked

@@ -15,9 +15,9 @@ import {
     FormControlLabel,
     Typography,
     Divider,
-    Stack,
-    useTheme
+    Stack
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -343,8 +343,8 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                                 edge="end"
                                                 aria-label={showPassword ? "hide the password" : "display the password"}
                                                 onClick={() => setShowPassword(show => !show)}
-                                                onMouseDown={event => event.preventDefault()}
-                                                onMouseUp={event => event.preventDefault()}
+                                                onMouseDown={(event: React.MouseEvent) => event.preventDefault()}
+                                                onMouseUp={(event: React.MouseEvent) => event.preventDefault()}
                                                 tabIndex={-1}
                                             >
                                                 {showPassword ? <VisibilityOff /> : <Visibility />}
