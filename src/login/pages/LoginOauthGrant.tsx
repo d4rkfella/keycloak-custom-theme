@@ -24,7 +24,7 @@ export default function LoginOauthGrant(props: PageProps<Extract<KcContext, { pa
             headerNode={
                 <>
                     {client.attributes.logoUri && <img src={client.attributes.logoUri} />}
-                    <p>{client.name ? msg("oauthGrantTitle", advancedMsgStr(client.name)) : msg("oauthGrantTitle", client.clientId)}</p>
+                    {client.name ? msg("oauthGrantTitle", advancedMsgStr(client.name)) : msg("oauthGrantTitle", client.clientId)}
                 </>
             }
         >
