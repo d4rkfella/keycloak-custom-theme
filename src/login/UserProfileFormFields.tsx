@@ -259,15 +259,17 @@ function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefine
                 disabled={attribute.readOnly}
                 autoComplete={attribute.autocomplete}
                 placeholder={attribute.annotations.inputTypePlaceholder && advancedMsgStr(attribute.annotations.inputTypePlaceholder)}
-                inputProps={{
-                    pattern: attribute.annotations.inputTypePattern,
-                    size: attribute.annotations.inputTypeSize ? parseInt(`${attribute.annotations.inputTypeSize}`) : undefined,
-                    maxLength: attribute.annotations.inputTypeMaxlength ? parseInt(`${attribute.annotations.inputTypeMaxlength}`) : undefined,
-                    minLength: attribute.annotations.inputTypeMinlength ? parseInt(`${attribute.annotations.inputTypeMinlength}`) : undefined,
-                    max: attribute.annotations.inputTypeMax,
-                    min: attribute.annotations.inputTypeMin,
-                    step: attribute.annotations.inputTypeStep,
-                    ...Object.fromEntries(Object.entries(attribute.html5DataAnnotations ?? {}).map(([key, value]) => [`data-${key}`, value]))
+                slotProps={{
+                    htmlInput: {
+                        pattern: attribute.annotations.inputTypePattern,
+                        maxLength: attribute.annotations.inputTypeMaxlength ? parseInt(`${attribute.annotations.inputTypeMaxlength}`) : undefined,
+                        minLength: attribute.annotations.inputTypeMinlength ? parseInt(`${attribute.annotations.inputTypeMinlength}`) : undefined,
+                        max: attribute.annotations.inputTypeMax,
+                        min: attribute.annotations.inputTypeMin,
+                        step: attribute.annotations.inputTypeStep,
+                        size: attribute.annotations.inputTypeSize ? parseInt(`${attribute.annotations.inputTypeSize}`) : undefined,
+                        ...Object.fromEntries(Object.entries(attribute.html5DataAnnotations ?? {}).map(([key, value]) => [`data-${key}`, value]))
+                    }
                 }}
                 onChange={event => {
                     const newValue =
@@ -360,16 +362,22 @@ function TextareaTag(props: InputFieldByTypeProps) {
             error={displayableErrors.length !== 0}
             disabled={attribute.readOnly}
             rows={attribute.annotations.inputTypeRows ? parseInt(`${attribute.annotations.inputTypeRows}`) : 4}
-            inputProps={{ maxLength: attribute.annotations.inputTypeMaxlength ? parseInt(`${attribute.annotations.inputTypeMaxlength}`) : undefined }}
+            slotProps={{
+                htmlInput: {
+                    maxLength: attribute.annotations.inputTypeMaxlength ? parseInt(`${attribute.annotations.inputTypeMaxlength}`) : undefined
+                }
+            }}
             value={valueOrValues}
             onChange={event => dispatchFormAction({ action: "update", name: attribute.name, valueOrValues: event.target.value })}
             onBlur={() => dispatchFormAction({ action: "focus lost", name: attribute.name, fieldIndex: undefined })}
-            helperText={displayableErrors.map((e, i, arr) => (
-                <Fragment key={i}>
-                    {typeof e.errorMessage === "string" ? advancedMsgStr(e.errorMessage) : e.errorMessage}
-                    {i < arr.length - 1 && <br />}
-                </Fragment>
-            ))}
+            helperText={
+                displayableErrors.length > 0 ? displayableErrors.map((e, i, arr) => (
+                    <Fragment key={i}>
+                        {typeof e.errorMessage === "string" ? advancedMsgStr(e.errorMessage) : e.errorMessage}
+                        {i < arr.length - 1 && <br />}
+                    </Fragment>
+                )) : undefined
+            }
         />
     );
 }

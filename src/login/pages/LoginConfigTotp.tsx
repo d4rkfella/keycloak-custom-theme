@@ -76,7 +76,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                                 }}
                             >
                                 <Typography>{msg("loginTotpManualStep2")}</Typography>
-                                <Stack mt={1.5} spacing={1}>
+                                <Stack spacing={1} sx={{ mt: 1.5 }}>
                                     <Typography
                                         id="kc-totp-secret-key"
                                         sx={{

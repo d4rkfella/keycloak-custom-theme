@@ -110,10 +110,12 @@ export function SocialProviderCarousel({ providers }: { providers: any[] }) {
     return (
         <Stack
             id="kc-social-providers-carousel"
-            justifyContent={showCarousel ? "flex-start" : "center"}
             direction="row"
-            alignItems="center"
             spacing={0.5}
+            sx={{
+                justifyContent: showCarousel ? "flex-start" : "center",
+                alignItems: "center"
+            }}
         >
             {showCarousel && (
                 <IconButton

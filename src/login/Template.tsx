@@ -75,12 +75,12 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 >
                     <Stack
                         direction="row"
-                        justifyContent="left"
-                        alignItems="center"
                         spacing={1}
                         id="kc-authentication-header"
                         sx={{
-                            width: "100%"
+                            width: "100%",
+                            justifyContent: "left",
+                            alignItems: "center"
                         }}
                     >
                         {!(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? (
