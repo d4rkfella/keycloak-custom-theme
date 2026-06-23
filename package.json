@@ -23,7 +23,7 @@
         "@fontsource/orbitron": "^5.2.8",
         "@fontsource/outfit": "^5.2.8",
         "@mui/icons-material": "^9.1.1",
-        "@mui/material": "^9.1.1",
+        "@mui/material": "^9.1.2",
         "font-awesome": "^4.7.0",
         "framer-motion": "^12.40.0",
         "keycloakify": "^11.15.10",
