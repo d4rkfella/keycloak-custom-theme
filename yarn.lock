@@ -654,15 +654,15 @@
     "@eslint/core" "^1.2.1"
     levn "^0.4.1"
 
-"@fontsource/orbitron@^5.2.8":
-  version "5.2.8"
-  resolved "https://registry.npmjs.org/@fontsource/orbitron/-/orbitron-5.2.8.tgz"
-  integrity sha512-ruzrDl5vnqNykk5DZWY0Ezj4aeFZSbCnwJTc/98ojNJHSsHhlhT2r7rwQrA5sptmF8JtB8TQTAvlfRvcV28RPw==
+"@fontsource/orbitron@^5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/orbitron/-/orbitron-5.3.0.tgz#d8f944e889ba4ec24de2e873479cf7c6de1dc5af"
+  integrity sha512-+BhPsbUAo/AF7sRcf+TEexm+EWWkgTiR9Zwb7AhYIPkc5oplfvw0C45Oc2xlKPhwVEmxG8hHuA6/Ansbl+Bc6w==
 
-"@fontsource/outfit@^5.2.8":
-  version "5.2.8"
-  resolved "https://registry.npmjs.org/@fontsource/outfit/-/outfit-5.2.8.tgz"
-  integrity sha512-rXC6g0MqD7cOBjht0bMqc43qM6lRqDLML9KXsmg9uykz0wLQhy8Z/ajrMG6iyoT3NJR+MYgU+OEHp7uHoTb+Yw==
+"@fontsource/outfit@^5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/outfit/-/outfit-5.3.0.tgz#a3f11014edbe02f0246848e9463235b9edc7cf23"
+  integrity sha512-0AVHzTTVJSxWDOxPKSfMeHhZeBFDU3cmgrcOb76ZEyhGo0+xgyG3GsLF3h9+X8w0IX7G4jzjJgFQEBiWdX6VgA==
 
 "@humanfs/core@^0.19.1":
   version "0.19.1"
