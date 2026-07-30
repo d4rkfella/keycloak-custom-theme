@@ -3174,10 +3174,10 @@ jsonc-parser@^3.3.1:
     object.assign "^4.1.4"
     object.values "^1.1.6"
 
-keycloakify@^11.15.11:
-  version "11.15.11"
-  resolved "https://registry.yarnpkg.com/keycloakify/-/keycloakify-11.15.11.tgz#24f4277e201c88439b0af80145f1366de2162ce8"
-  integrity sha512-owrnvNVW8Kf0AzLYHzYy4U624NhyLp5vYBryoY5yNYOUo/Xud4r4jniTYvXXZeJjLzHpvJfco1iRPX5qmbnK+g==
+keycloakify@^11.15.12:
+  version "11.15.12"
+  resolved "https://registry.yarnpkg.com/keycloakify/-/keycloakify-11.15.12.tgz#0126a6f9cd3fd84af3090745a04b774bb4846f35"
+  integrity sha512-OTsggvdg6dIYetbjvC9xziCGGftYjTIsOOKPIq6q0kuyFMTrFX0Zpk4MhSGUj2r8Kk78jj281FARwG3XCArfsA==
   dependencies:
     tsafe "^1.8.5"
 
